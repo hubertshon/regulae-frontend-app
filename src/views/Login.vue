@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <h1>Login</h1>
+    <h2>Login</h2>
     <p class="text-danger" v-for="error in errors">{{ error }}</p>
     <p v-if="message">{{ message }}</p>
     <form v-on:submit.prevent="submit()" v-else>
@@ -8,7 +8,6 @@
       <input type="email" v-model="email">
       <label>Password:</label>
       <input type="password" v-model="password">
-  
       <input type="submit" value="Submit">
     </form>
 
@@ -16,7 +15,6 @@
 </template>
 
 <style>
-
 .text-danger {
   color: red;
 }

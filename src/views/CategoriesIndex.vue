@@ -1,6 +1,10 @@
 <template>
-  <div class="home">
-    <p v-for="category in categories">{{ category }}</p>
+  <div class="categoriesindex">
+    <div class="categories" v-for="category in categories">
+      <h3>{{ category.name }}</h3>
+      <p>{{ category.statement }}</p>
+      <p>{{ category.frequency }}</p>
+    </div>
   </div>
 </template>
 
