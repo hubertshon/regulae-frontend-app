@@ -4,12 +4,11 @@
     <p class="text-danger" v-for="error in errors">{{ error }}</p>
     <p v-if="message">{{ message }}</p>
     <form v-on:submit.prevent="submit()" v-else>
-      <ul>
-      <li><label>Email:</label>
-      <input type="email" v-model="email"></li>
-      <li><label>Password:</label>
-      <input type="password" v-model="password"></li>
-      </ul>
+      <label>Email:</label>
+      <input type="email" v-model="email">
+      <label>Password:</label>
+      <input type="password" v-model="password">
+  
       <input type="submit" value="Submit">
     </form>
 
@@ -17,6 +16,7 @@
 </template>
 
 <style>
+
 .text-danger {
   color: red;
 }
@@ -26,34 +26,34 @@
 import axios from "axios";
 
 export default {
-  data: function() {
+  data: function () {
     return {
       email: "",
       password: "",
       errors: [],
-      message: ""
+      message: "",
     };
   },
   methods: {
-    submit: function() {
+    submit: function () {
       var params = {
         email: this.email,
-        password: this.password
+        password: this.password,
       };
       axios
         .post("/api/sessions", params)
-        .then(response => {
+        .then((response) => {
           axios.defaults.headers.common["Authorization"] =
             "Bearer " + response.data.jwt;
           localStorage.setItem("jwt", response.data.jwt);
           this.$router.push("/");
         })
-        .catch(error => {
+        .catch((error) => {
           this.errors = ["Invalid email or password"];
           this.email = "";
           this.password = "";
         });
-    }
-  }
+    },
+  },
 };
 </script>

@@ -5,18 +5,21 @@
 </template>
 
 <style>
+h1 {
+  font-size: 3em;
+}
 </style>
 
 <script>
 import axios from "axios";
 
 export default {
-  data: function() {
+  data: function () {
     return {
-      message: "Regulae Home"
+      message: "Regulae",
     };
   },
-  created: function() {},
-  methods: {}
+  created: function () {},
+  methods: {},
 };
 </script>

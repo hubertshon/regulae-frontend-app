@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1 v-for="category in categories">{{ category }}</h1>
+    <p v-for="category in categories">{{ category }}</p>
   </div>
 </template>
 
@@ -10,17 +10,17 @@
 <script>
 import axios from "axios";
 export default {
-  data: function() {
+  data: function () {
     return {
-      categories: []
+      categories: [],
     };
   },
-  created: function() {
-    axios.get("/api/categories").then(response => {
+  created: function () {
+    axios.get("/api/categories").then((response) => {
       console.log("Categories: ", response.data);
       this.categories = response.data;
     });
   },
-  methods: {}
+  methods: {},
 };
 </script>

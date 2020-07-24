@@ -4,9 +4,8 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
       <router-link v-if="!isLoggedIn()" to="/signup">Signup</router-link> |
-      <router-link v-if="!isLoggedIn()" to="/login">Login</router-link> |
-      <!-- <a :href="logout()" v-if="isLoggedIn()">Logout</a> | -->
-      <router-link to="/categories">Categories</router-link> |
+      <router-link v-if="!isLoggedIn()" to="/login">Login</router-link>|
+      <router-link to="/categories">Categories</router-link> 
     </div>
     <router-view/>
   </div>
@@ -30,6 +29,10 @@
   color: #2c3e50;
 }
 
+h1 {
+  font-family: "PT Serif", serif;
+}
+
 #nav a.router-link-exact-active {
   color: #42b983;
 }
@@ -42,12 +45,12 @@ export default {
     //   delete axios.defaults.headers.common["Authorized"];
     //   localStorage.removeItem("jwt");
     // },
-    isLoggedIn: function() {
+    isLoggedIn: function () {
       return localStorage.getItem("jwt");
     },
-    getUserId: function() {
+    getUserId: function () {
       return localStorage.getItem("user_id");
-    }
-  }
+    },
+  },
 };
 </script>
