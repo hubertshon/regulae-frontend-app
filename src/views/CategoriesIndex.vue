@@ -1,7 +1,7 @@
 <template>
   <div class="categoriesindex">
     <div class="categories" v-for="category in categories">
-      <h3>{{ category.name }}</h3>
+      <router-link :to="`/categories/${category.id}`" class="category-title">{{ category.name }}</router-link>
       <p>{{ category.statement }}</p>
       <p>{{ category.frequency }}</p>
     </div>
@@ -9,6 +9,9 @@
 </template>
 
 <style>
+.category-title {
+  font-weight: bold;
+}
 </style>
 
 <script>

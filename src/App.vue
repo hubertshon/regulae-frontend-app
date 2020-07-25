@@ -5,7 +5,9 @@
       <router-link to="/about">About</router-link> |
       <router-link v-if="!isLoggedIn()" to="/signup">Signup</router-link> |
       <router-link v-if="!isLoggedIn()" to="/login">Login</router-link><router-link v-if="isLoggedIn()" to="/logout" >Logout</router-link> |
-      <router-link to="/categories">Categories</router-link> 
+      <router-link to="/categories">Categories</router-link> | 
+      <router-link to="/categories/new">Add Category</router-link> | 
+      <router-link to="/habits/new">Add Habit</router-link> 
     </div>
     <router-view/>
   </div>
@@ -42,10 +44,6 @@ h2 {
 import axios from "axios";
 export default {
   methods: {
-    // logout: function() {
-    //   delete axios.defaults.headers.common["Authorized"];
-    //   localStorage.removeItem("jwt");
-    // },
     isLoggedIn: function () {
       return localStorage.getItem("jwt");
     },

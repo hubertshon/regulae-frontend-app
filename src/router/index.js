@@ -5,6 +5,10 @@ import Signup from '../views/Signup.vue'
 import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
 import CategoriesIndex from '../views/CategoriesIndex.vue'
+import CategoriesNew from '../views/CategoriesNew.vue'
+import CategoriesShow from '../views/CategoriesShow.vue'
+import HabitsShow from '../views/HabitsShow.vue'
+import HabitsNew from '../views/HabitsNew.vue'
 
 
 Vue.use(VueRouter)
@@ -43,6 +47,27 @@ const routes = [
     name: 'CategoriesIndex',
     component: CategoriesIndex
   },
+  {
+    path: '/categories/new',
+    name: 'CategoriesNew',
+    component: CategoriesNew
+  },
+  {
+    path: '/categories/:id',
+    name: 'CategoriesShow',
+    component: CategoriesShow
+  },
+  {
+    path: '/habits/new',
+    name: 'HabitsNew',
+    component: HabitsNew
+
+  },
+  {
+    path: '/habits/:id',
+    name: 'HabitsShow',
+    component: HabitsShow
+  }
 ]
 
 const router = new VueRouter({
