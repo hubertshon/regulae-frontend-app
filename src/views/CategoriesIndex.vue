@@ -28,7 +28,7 @@
             <p class="text-danger" v-for="error in errors"> {{error}} </p>
           </div>
           <div class="modal-footer" v-on:submit.prevent="editCurrentCategory()">
-            <button type="button" class="btn btn-link" v-on:click="deleteCurrentCategory()" data-dismiss="modal">Delete Category</button>
+            <button type="button" style="color:red" class="btn btn-link" v-on:click="deleteCurrentCategory()" data-dismiss="modal">Delete Category</button>
             <button type="button" class="btn btn-secondary" v-on:click="editCurrentCategory()" data-dismiss="modal">Save Changes</button>
             <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
           </div>

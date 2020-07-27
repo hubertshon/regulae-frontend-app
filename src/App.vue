@@ -14,22 +14,24 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="User Info" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <h5 class="modal-title" id="User Info">Account Info</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <p>First Name: {{ user_info.first_name }}</p>
-            <p>Last Name: {{ user_info.last_name }}</p>
-            <p>Email: {{ user_info.email }}</p>
+            <form>
+              First Name: <input class="form-control" type ="text" v-model="user_info.first_name">
+              Last Name: <input class="form-control" type ="text" v-model="user_info.last_name">
+              Email: <input class="form-control" type ="text" v-model="user_info.email">
+            </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" v-on:click="deleteUser()" data-dismiss="modal">Delete Account</button>
+            <button type="button" style="color:red" class="btn btn-link" v-on:click="deleteUser()" data-dismiss="modal">Delete Account</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Edit</button>
             <button type="button" class="btn btn-primary">Close</button>
           </div>

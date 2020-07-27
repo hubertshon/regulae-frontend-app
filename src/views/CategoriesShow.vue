@@ -5,9 +5,6 @@
     <p>{{ category.image_url }}</p>
 
     <div class="container">
-      <div v-for="(habit, habitIndex) in category.habits" class="category-habits">
-        <button type="button" class="btn btn-link  btn-lg" v-on:click="setCurrentHabit(habitIndex)">{{ habit.name }}</button>
-      </div>
       <div class="current-habit">
         <p>Progress: {{ (currentHabit.habit_progress) * 100 }} %</p>
         <p>Notes: {{ currentHabit.notes }}</p>
@@ -17,6 +14,10 @@
         Edit Habit
       </button>
       </div>
+      <div v-for="(habit, habitIndex) in category.habits" class="category-habits">
+        <button type="button" class="btn btn-link  btn-lg" v-on:click="setCurrentHabit(habitIndex)">{{ habit.name }}</button>
+      </div>
+      
     </div>
 
         <!--Habit Modal -->
@@ -30,16 +31,24 @@
             </button>
           </div>
           <div class="modal-body" >
-            <p>Habit Name: </p>
-            <p>Notes: </p>
-            <p>Frequency: </p>
-            <p>Factor: </p>
-            <p>Duration: </p>
-            <p>Complete By: </p>
-            <p>Category: </p>
+            <form v-on:submit.prevent="editCurrentHabit()" class="edit-habit">
+              Name:<input type="text" class="form-control" v-model="currentHabit.name">
+              Notes:<input type="text" class="form-control" v-model="currentHabit.notes">
+              Frequency:<input type="number" class="form-control" v-model="currentHabit.frequency">
+              Factor:<input type="text" class="form-control" v-model="currentHabit.factor">
+              Duration:<input type="text" class="form-control" v-model="currentHabit.duration">
+              Complete By:<input type="date" class="form-control" v-model="currentHabit.complete_by">
+              <div class="form-group">
+                <label for="categorySelect">Category:</label>
+                <select class="form-control" id="categorySelect" v-model="currentHabit.category_id">
+                  <option v-for="category in categories" v-bind:value="category.id">{{ category.name }}</option>
+                </select>
+              </div>
+              <p v-for="error in errors">{{ error }}</p>
+            </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" v-on:click="deleteCurrentHabit()" data-dismiss="modal">Delete Habit</button>
+            <button type="button" style="color:red" class="btn btn-link" v-on:click="deleteCurrentHabit()" data-dismiss="modal">Delete Habit</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Save Changes</button>
             <button type="button" class="btn btn-primary">Close</button>
           </div>
@@ -69,10 +78,22 @@ export default {
   data: function () {
     return {
       category: [],
+      categories: [],
       currentHabit: {},
+      errors: [],
+      // HabitName: "",
+      // HabitNotes: "",
+      // HabitFrequency: "",
+      // HabitFactor: "",
+      // HabitDuration: "",
+      // HabitCompleteBy: "",
+      // HabitCategoryId: "",
     };
   },
   created: function () {
+    axios.get(`/api/categories`).then((response) => {
+      this.categories = response.data;
+    });
     axios.get(`/api/categories/${this.$route.params.id}`).then((response) => {
       console.log("Categories: ", response.data);
       this.category = response.data;
@@ -91,6 +112,26 @@ export default {
     // },
     setCurrentHabit: function (index) {
       this.currentHabit = this.category.habits[index];
+    },
+    editCurrentHabit: function () {
+      var params = {
+        name: this.currentHabit.name,
+        notes: this.currentHabit.notes,
+        statement: this.currentHabit.statement,
+        frequency: this.currentHabit.frequency,
+        factor: this.currentHabit.factor,
+        duration: this.currentHabit.duration,
+        complete_by: this.currentHabit.complete_by,
+        category_id: this.currentHabit.category_id,
+      };
+      axios
+        .patch(`/api/habits/${this.currentHabit.id}`, params)
+        .then((response) => {
+          console.log("Success", response.data);
+        })
+        .catch((response) => (error) => {
+          this.errors = error.response.data.errors;
+        });
     },
     deleteCurrentHabit: function () {
       axios.delete(`/api/habits/${this.currentHabit.id}`);
