@@ -9,6 +9,7 @@ import CategoriesNew from '../views/CategoriesNew.vue'
 import CategoriesShow from '../views/CategoriesShow.vue'
 import HabitsShow from '../views/HabitsShow.vue'
 import HabitsNew from '../views/HabitsNew.vue'
+import UsersDeleteConfirm from "../views/UsersDeleteConfirm.vue"
 
 
 Vue.use(VueRouter)
@@ -67,6 +68,11 @@ const routes = [
     path: '/habits/:id',
     name: 'HabitsShow',
     component: HabitsShow
+  },
+  {
+    path: "/users/delete_confirm",
+    name: "UsersDeleteConfirm",
+    component: UsersDeleteConfirm
   }
 ]
 

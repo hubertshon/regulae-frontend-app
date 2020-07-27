@@ -6,13 +6,44 @@
 
     <div class="container">
       <div v-for="(habit, habitIndex) in category.habits" class="category-habits">
-        <button class="habit-title" v-on:click="setCurrentHabit(habitIndex)">{{ habit.name }}</button>
+        <button type="button" class="btn btn-link  btn-lg" v-on:click="setCurrentHabit(habitIndex)">{{ habit.name }}</button>
       </div>
       <div class="current-habit">
         <p>Progress: {{ (currentHabit.habit_progress) * 100 }} %</p>
         <p>Notes: {{ currentHabit.notes }}</p>
         <p>Frequency: {{ currentHabit.frequency }} times </p>
         <p>Total: {{ currentHabit.total }}</p>
+        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#habitModal">
+        Edit Habit
+      </button>
+      </div>
+    </div>
+
+        <!--Habit Modal -->
+    <div class="modal fade" id="habitModal" tabindex="-1" role="dialog" aria-labelledby="habitModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="habitModalLabel">{{currentHabit.name}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" >
+            <p>Habit Name: </p>
+            <p>Notes: </p>
+            <p>Frequency: </p>
+            <p>Factor: </p>
+            <p>Duration: </p>
+            <p>Complete By: </p>
+            <p>Category: </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" v-on:click="deleteCurrentHabit()" data-dismiss="modal">Delete Habit</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Save Changes</button>
+            <button type="button" class="btn btn-primary">Close</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -60,6 +91,10 @@ export default {
     // },
     setCurrentHabit: function (index) {
       this.currentHabit = this.category.habits[index];
+    },
+    deleteCurrentHabit: function () {
+      axios.delete(`/api/habits/${this.currentHabit.id}`);
+      this.$router.go(`/categories/${this.category.id}`);
     },
   },
 };

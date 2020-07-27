@@ -8,14 +8,14 @@
       <router-link v-if="isLoggedIn()" to="/categories">Categories</router-link> | 
       <router-link v-if="isLoggedIn()" to="/categories/new">Add Category</router-link> | 
       <router-link v-if="isLoggedIn()" to="/habits/new">Add Habit</router-link> 
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-        Launch demo modal
+      <button v-if="isLoggedIn()" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Account Info
       </button>
     </div>
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
@@ -24,23 +24,26 @@
             </button>
           </div>
           <div class="modal-body">
-            ...
+            <p>First Name: {{ user_info.first_name }}</p>
+            <p>Last Name: {{ user_info.last_name }}</p>
+            <p>Email: {{ user_info.email }}</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-secondary" v-on:click="deleteUser()" data-dismiss="modal">Delete Account</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Edit</button>
+            <button type="button" class="btn btn-primary">Close</button>
           </div>
         </div>
       </div>
     </div>
-    
+
     <router-view/>
   </div>
 </template>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+/* #app { */
+/* font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -63,17 +66,34 @@ h2 {
 
 #nav a.router-link-exact-active {
   color: #42b983;
-}
+} */
 </style>
 <script>
 import axios from "axios";
 export default {
+  data: function () {
+    return {
+      user_info: {},
+    };
+  },
+  created: function () {
+    axios
+      .get(`/api/users/${localStorage.getItem("user_id")}`)
+      .then((response) => {
+        this.user_info = response.data;
+      });
+  },
   methods: {
     isLoggedIn: function () {
       return localStorage.getItem("jwt");
     },
     getUserId: function () {
       return localStorage.getItem("user_id");
+    },
+
+    deleteUser: function () {
+      axios.delete(`/api/users/${localStorage.getItem("user_id")}`);
+      this.$router.push("/delete_confirm");
     },
   },
 };
