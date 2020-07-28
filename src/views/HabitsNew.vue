@@ -54,7 +54,7 @@ export default {
         frequency: this.newHabitFrequency,
         factor: this.newHabitFactor,
         duration: this.newHabitDuration,
-        complete_by: this.NewHabitCompleteBy,
+        complete_by: this.newHabitCompleteBy,
         category_id: this.newHabitCategoryId,
         // user_id: getUserId(),
         // category_id: this.newCategoryId
@@ -63,7 +63,7 @@ export default {
         .post("/api/habits", params)
         .then((response) => {
           console.log("Success", response.data);
-          this.$router.push(`/habits/${response.data.id}`);
+          this.$router.push(`/categories/${this.newHabitCategoryId}`);
         })
         .catch((error) => {
           this.errors = error.response.data.errors;

@@ -31,7 +31,7 @@ export default {
       };
       axios.post("/api/categories", params).then((response) => {
         console.log("Success", response.data);
-        this.$router.push(`/categories/${response.data.id}`);
+        this.$router.push(`/categories`);
       });
     },
   },

@@ -1,11 +1,20 @@
 <template>
   <div class="category-show">
+    
     <h2>{{ category.name }}</h2>
     <h5>{{ category.statement }}</h5>
     <p>{{ category.image_url }}</p>
 
     <div class="container">
       <div class="current-habit">
+
+        <div class="bar-container">
+          <div class ="bar" :style="{ width: (currentHabit.habit_progress*100) + '%'}" />
+        </div>
+
+
+        <h5> {{ currentHabit.name }}</h5>
+        <p> {{ currentHabit.id }} </p>
         <p>Progress: {{ (currentHabit.habit_progress) * 100 }} %</p>
         <p>Notes: {{ currentHabit.notes }}</p>
         <p>Frequency: {{ currentHabit.frequency }} times </p>
@@ -13,14 +22,20 @@
         <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#habitModal">
         Edit Habit
       </button>
+      <button type="button" class="btn btn-outline-secondary btn" v-on:click="removeComplete()">
+        -
+      </button>
+      <button type="button" class="btn btn-success btn" v-on:click="addComplete()">
+        +
+      </button>
       </div>
+
       <div v-for="(habit, habitIndex) in category.habits" class="category-habits">
-        <button type="button" class="btn btn-link  btn-lg" v-on:click="setCurrentHabit(habitIndex)">{{ habit.name }}</button>
+        <button type="button" class="btn btn-link  btn-lg" v-on:click="setCurrentHabit(habitIndex)">{{ habit.name }} </button>
       </div>
-      
     </div>
 
-        <!--Habit Modal -->
+<!--Habit Modal -->
     <div class="modal fade" id="habitModal" tabindex="-1" role="dialog" aria-labelledby="habitModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -30,8 +45,9 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body" >
-            <form v-on:submit.prevent="editCurrentHabit()" class="edit-habit">
+          <form v-on:submit.prevent="editCurrentHabit()" class="edit-habit">
+            <div class="modal-body" >
+            
               Name:<input type="text" class="form-control" v-model="currentHabit.name">
               Notes:<input type="text" class="form-control" v-model="currentHabit.notes">
               Frequency:<input type="number" class="form-control" v-model="currentHabit.frequency">
@@ -45,13 +61,14 @@
                 </select>
               </div>
               <p v-for="error in errors">{{ error }}</p>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" style="color:red" class="btn btn-link" v-on:click="deleteCurrentHabit()" data-dismiss="modal">Delete Habit</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Save Changes</button>
-            <button type="button" class="btn btn-primary">Close</button>
-          </div>
+            
+            </div>
+            <div class="modal-footer">
+              <button type="button" style="color:red" class="btn btn-link" v-on:click="deleteCurrentHabit()" data-dismiss="modal">Delete Habit</button>
+              <input type ="submit" class="btn btn-success" data-dismiss="modal" value="Save Changes">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -70,6 +87,20 @@
 .category-habits {
   margin-top: 5%;
 }
+
+.bar-container {
+  text-align: center;
+  width: 250px;
+  height: 5px;
+  margin: 40px;
+  background-color: lightgray;
+}
+
+.bar {
+  background-color: rgb(36, 177, 57);
+  height: 100%;
+  width: 0%;
+}
 </style>
 
 <script>
@@ -81,13 +112,6 @@ export default {
       categories: [],
       currentHabit: {},
       errors: [],
-      // HabitName: "",
-      // HabitNotes: "",
-      // HabitFrequency: "",
-      // HabitFactor: "",
-      // HabitDuration: "",
-      // HabitCompleteBy: "",
-      // HabitCategoryId: "",
     };
   },
   created: function () {
@@ -110,6 +134,7 @@ export default {
     //     return "Month";
     //   }
     // },
+
     setCurrentHabit: function (index) {
       this.currentHabit = this.category.habits[index];
     },
@@ -122,7 +147,6 @@ export default {
         factor: this.currentHabit.factor,
         duration: this.currentHabit.duration,
         complete_by: this.currentHabit.complete_by,
-        category_id: this.currentHabit.category_id,
       };
       axios
         .patch(`/api/habits/${this.currentHabit.id}`, params)
@@ -135,7 +159,33 @@ export default {
     },
     deleteCurrentHabit: function () {
       axios.delete(`/api/habits/${this.currentHabit.id}`);
-      this.$router.go(`/categories/${this.category.id}`);
+      this.$forceUpdate(this.categories);
+      // this.$router.go(`/categories/${this.category.id}`);
+    },
+    // forceRerender() {
+    //   this.habitKey += 1;
+    // },
+
+    addComplete: function () {
+      var params = {
+        habit_id: this.currentHabit.id,
+      };
+      axios.post("/api/completes", params).then((response) => {
+        console.log("Complete Added", response.data);
+        this.$router.push("/categories/");
+      });
+    },
+
+    removeComplete: function () {
+      var params = {
+        habit_id: this.currentHabit.id,
+      };
+      axios
+        .delete(`/api/completes/${this.currentHabit.id}`)
+        .then((response) => {
+          console.log("Complete Removed");
+          this.$router.push(`categories/${this.category.id}`);
+        });
     },
   },
 };

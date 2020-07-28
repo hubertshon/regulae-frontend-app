@@ -9,6 +9,11 @@
     <p>Category: {{ habit.category }}</p>
     <p>Progress: {{ habit.habit_progress }}</p>
 
+    <div v-for="bird in birds" :key="birdKey">
+      <p>{{ bird }}</p>
+      <button v-on:click="forceRerender()">Re Render</button>
+    </div>
+
   </div>
 </template>
 
@@ -32,6 +37,8 @@ export default {
     return {
       habit: [],
       category: "",
+      birds: ["duck", "goose", "owl"],
+      birdKey: 0,
     };
   },
   created: function () {
@@ -49,6 +56,9 @@ export default {
       } else if (this.category.habit.factor === 1) {
         return "Month";
       }
+    },
+    forceRerender: function () {
+      this.birdKey += 1;
     },
   },
 };

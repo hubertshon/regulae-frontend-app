@@ -3,7 +3,7 @@
     <div class="categories" v-for="(category, categoryIndex) in categories">
       <router-link :to="`/categories/${category.id}`" class="category-title">{{ category.name }}</router-link>
       <p>{{ category.statement }}</p>
-      <p>{{ category.category_progress}}</p>
+      <h4>{{ getCategoryProgress(category) }}%</h4>
       <button type="button" class="btn btn-light" data-toggle="modal" data-target="#categoryModal" v-on:click="setCurrentCategory(categoryIndex)">
         Edit Category
       </button>
@@ -45,6 +45,7 @@
 <style>
 .category-title {
   font-weight: bold;
+  font-size: 1.6em;
 }
 </style>
 
@@ -56,6 +57,7 @@ export default {
       categories: [],
       currentCategory: {},
       errors: [],
+      categoryProgress: "",
     };
   },
   created: function () {
@@ -64,6 +66,7 @@ export default {
       this.categories = response.data;
     });
   },
+
   methods: {
     editCurrentCategory: function () {
       var params = {
@@ -82,11 +85,14 @@ export default {
     },
     deleteCurrentCategory: function () {
       axios.delete(`/api/categories/${this.currentCategory.id}`);
-      this.$router.go("/categories");
+      this.$router.push("/categories");
     },
     setCurrentCategory: function (index) {
       this.currentCategory = this.categories[index];
       console.log(this.currentCategory);
+    },
+    getCategoryProgress: function (category) {
+      return Math.round(category.category_progress * 100);
     },
   },
 };
