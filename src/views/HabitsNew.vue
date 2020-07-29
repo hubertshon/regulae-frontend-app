@@ -1,15 +1,39 @@
 <template>
   <div class="habits-new">
     <form v-on:submit.prevent="createHabit()" class="new-habit">
-      Name:<input type="text" v-model="newHabitName">
-      Notes:<input type="text" v-model="newHabitNotes">
-      Frequency:<input type="number" v-model="newHabitFrequency">
-      Factor:<input type="text" v-model="newHabitFactor">
-      Duration:<input type="text" v-model="newHabitDuration">
-      Complete By:<input type="date" v-model="newHabitCompleteBy">
+
       <div class="form-group">
-        <label for="categorySelect">Category:</label>
-        <select class="form-control" id="categorySelect" v-model="newHabitCategoryId">
+      *Name:<input class="form-control" type="text" v-model="newHabitName" required>
+      Notes:<input class="form-control" type="text" v-model="newHabitNotes">
+      *Frequency:<input class="form-control" type="number" v-model="newHabitFrequency" required>
+
+        <label for="factorSelect">Time Length:</label>
+        <select class="form-control" id="factorSelect" v-model="newHabitFactor" required>
+          <option v-bind:value="28">per Day</option>
+          <option v-bind:value="4">per Week</option>
+          <option v-bind:value="1">per Month</option>
+        </select>
+      </div>
+
+
+      <div class="form-group" required>
+        <div class="form-check-inline">
+          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1" v-model="durationOrDate">
+          <label class="form-check-label" for="inlineRadio1">Number of Months</label>
+        </div>
+        <div class="form-check-inline">
+          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2" v-model="durationOrDate">
+          <label class="form-check-label" for="inlineRadio2">Complete By Date</label>
+        </div>
+        <div class="form-group">
+        Duration:<input type="text" v-model="newHabitDuration" :disabled="durationOrDate == 2 || !!newHabitCompleteBy">
+        Complete By:<input type="date" v-model="newHabitCompleteBy" :disabled="durationOrDate == 1 || !!newHabitDuration">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="categorySelect">*Category:</label>
+        <select class="form-control" id="categorySelect" v-model="newHabitCategoryId" required>
           <option v-for="category in categories" v-bind:value="category.id">{{ category.name }}</option>
         </select>
       </div>
@@ -20,6 +44,12 @@
 </template>
 
 <style>
+#factorSelect {
+  width: 225px;
+}
+.form-group {
+  width: 55%;
+}
 </style>
 
 <script>
@@ -37,6 +67,7 @@ export default {
       newHabitCategoryId: "",
       categories: [],
       errors: [],
+      durationOrDate: "1",
     };
   },
   created: function () {
@@ -69,6 +100,13 @@ export default {
           this.errors = error.response.data.errors;
         });
     },
+    setDurationOrDate: function (number) {
+      this.durationOrDate = number;
+      console.log(this.durationOrdate);
+    },
+    // durationOrDate: function () {
+    //   if ()
+    // }
   },
 };
 </script>

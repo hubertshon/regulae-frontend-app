@@ -1,7 +1,7 @@
 <template>
   <div class="categories-new">
     <form v-on:submit.prevent="createCategory()" class="new-category">
-      Name:<input type="text" v-model="newCategoryName">
+      *Name:<input type="text" v-model="newCategoryName" required>
       Statement:<input type="text" v-model="newCategoryStatement">
       Image URL:<input type="text" v-model="newCategoryImageUrl">
       <input type="submit" value="Create Category">

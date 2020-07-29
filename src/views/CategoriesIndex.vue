@@ -21,7 +21,7 @@
           </div>
           <div class="modal-body" >
             <form>
-              Category Name: <input type="text" class="form-control" v-model="currentCategory.name">
+              Category Name: <input type="text" class="form-control" v-model="currentCategory.name" required>
               Category Statement: <input type="text" class="form-control" v-model="currentCategory.statement" value="Category Name">
               Image URL: <input type="text" class="form-control" v-model="currentCategory.image_url" value="Image URL">
             </form>

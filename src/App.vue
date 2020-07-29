@@ -25,14 +25,14 @@
           </div>
           <div class="modal-body">
             <form>
-              First Name: <input class="form-control" type ="text" v-model="user_info.first_name">
-              Last Name: <input class="form-control" type ="text" v-model="user_info.last_name">
-              Email: <input class="form-control" type ="text" v-model="user_info.email">
+              First Name: <input class="form-control" type ="text" v-model="user_info.first_name" required>
+              Last Name: <input class="form-control" type ="text" v-model="user_info.last_name" required>
+              Email: <input class="form-control" type ="text" v-model="user_info.email" required>
             </form>
           </div>
           <div class="modal-footer">
             <button type="button" style="color:red" class="btn btn-link" v-on:click="deleteUser()" data-dismiss="modal">Delete Account</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Edit</button>
+            <button type="button" class="btn btn-secondary" v-on:click="editUser()" data-dismiss="modal">Save Changes</button>
             <button type="button" class="btn btn-primary">Close</button>
           </div>
         </div>
@@ -83,6 +83,7 @@ export default {
       .get(`/api/users/${localStorage.getItem("user_id")}`)
       .then((response) => {
         this.user_info = response.data;
+        console.log(response.data);
       });
   },
   methods: {
@@ -96,6 +97,18 @@ export default {
     deleteUser: function () {
       axios.delete(`/api/users/${localStorage.getItem("user_id")}`);
       this.$router.push("/delete_confirm");
+    },
+    editUser: function () {
+      var params = {
+        first_name: this.user_info.first_name,
+        last_name: this.user_info.last_name,
+        email: this.user_info.email,
+      };
+      axios
+        .patch(`/api/users/${localStorage.getItem("user_id")}`, params)
+        .then((response) => {
+          console.log(response.data);
+        });
     },
   },
 };
