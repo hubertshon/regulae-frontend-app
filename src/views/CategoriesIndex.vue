@@ -7,7 +7,15 @@
       <button type="button" class="btn btn-light" data-toggle="modal" data-target="#categoryModal" v-on:click="setCurrentCategory(categoryIndex)">
         Edit Category
       </button>
-    </div>
+
+      <!-- <div v-for="(habit, habitIndex, habitKey) in category.habits" :key="habitKey" class="category-habits">
+        <button type="button" class="btn btn-link  btn-sm">{{ habit.name }} </button>
+
+        <!-- <div class="ctg-idx-bar-container">
+          <div class ="ctg-idx-bar" :style="{ width: (habit.habit_progress*100) + '%'}" />
+          </div>
+        </div> -->
+      </div>
 
     <!-- Category Modal -->
     <div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" aria-labelledby="categoryModalLabel" aria-hidden="true">
@@ -36,8 +44,9 @@
       </div>
     </div>
 
+  
 
-   
+
 
   </div>
 </template>
@@ -46,6 +55,20 @@
 .category-title {
   font-weight: bold;
   font-size: 1.6em;
+}
+
+.ctg-idx-bar-container {
+  text-align: center;
+  width: 175px;
+  height: 2px;
+  margin: 40px;
+  background-color: lightgray;
+}
+
+.ctg-idx-bar {
+  background-color: rgb(65, 65, 65);
+  height: 100%;
+  width: 0%;
 }
 </style>
 
@@ -93,6 +116,9 @@ export default {
     },
     getCategoryProgress: function (category) {
       return Math.round(category.category_progress * 100);
+    },
+    getHabitProgress: function (progress) {
+      return Math.round(progress * 100);
     },
   },
 };

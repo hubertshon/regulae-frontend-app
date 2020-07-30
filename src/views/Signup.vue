@@ -6,15 +6,15 @@
     <form v-on:submit.prevent='submit()'>
       <ul>
       <li><label>First Name:</label>
-      <input type="text" v-model="first_name"></li>
+      <input type="text" v-model="first_name" required></li>
       <li><label>Last Name:</label>
-      <input type="text" v-model="last_name"></li>
+      <input type="text" v-model="last_name" required></li>
       <li><label>Email:</label>
-      <input type="email" v-model="email"></li>
+      <input type="email" v-model="email" required></li>
       <li><label>Password:</label>
-      <input type="password" v-model="password"></li>
+      <input type="password" v-model="password" required></li>
       <li><label>Password Confirmation:</label>
-      <input type="password" v-model="passwordConfirmation"></li>
+      <input type="password" v-model="passwordConfirmation" required></li>
       <li><input type ="submit" value="Submit"></li>
       </ul>
     </form>
@@ -32,7 +32,7 @@
 import axios from "axios";
 
 export default {
-  data: function() {
+  data: function () {
     return {
       first_name: "",
       last_name: "",
@@ -40,28 +40,28 @@ export default {
       password: "",
       passwordConfirmation: "",
       errors: [],
-      message: ""
+      message: "",
     };
   },
-  created: function() {},
+  created: function () {},
   methods: {
-    submit: function() {
+    submit: function () {
       var params = {
         first_name: this.first_name,
         last_name: this.last_name,
         email: this.email,
         password: this.password,
-        password_confirmation: this.passwordConfirmation
+        password_confirmation: this.passwordConfirmation,
       };
       axios
         .post("/api/users", params)
-        .then(response => {
+        .then((response) => {
           this.message = "Account Created";
         })
-        .catch(error => {
+        .catch((error) => {
           this.errors = error.response.data.errors;
         });
-    }
-  }
+    },
+  },
 };
 </script>

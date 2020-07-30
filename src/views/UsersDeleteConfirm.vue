@@ -20,7 +20,7 @@ export default {
   created: function () {
     delete axios.defaults.headers.common["Authorization"];
     localStorage.removeItem("jwt");
-    this.router.push("/");
+    this.router.push("/logout");
   },
 };
 </script>

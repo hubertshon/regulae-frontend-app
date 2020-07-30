@@ -32,8 +32,8 @@
           </div>
           <div class="modal-footer">
             <button type="button" style="color:red" class="btn btn-link" v-on:click="deleteUser()" data-dismiss="modal">Delete Account</button>
-            <button type="button" class="btn btn-secondary" v-on:click="editUser()" data-dismiss="modal">Save Changes</button>
-            <button type="button" class="btn btn-primary">Close</button>
+            <button type="button" class="btn btn-secondary" v-on:click="editUser()" data-dismiss="modal"> Save Changes</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
@@ -93,7 +93,6 @@ export default {
     getUserId: function () {
       return localStorage.getItem("user_id");
     },
-
     deleteUser: function () {
       axios.delete(`/api/users/${localStorage.getItem("user_id")}`);
       this.$router.push("/delete_confirm");

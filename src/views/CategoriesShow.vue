@@ -8,7 +8,7 @@
     <!-- Habit Info -->
     <div class="container" >
       <div v-show="currentHabit.id > 0" class="current-habit">
-        
+        <p> {{ noHabitMessage }}</p>
         <!-- Progress Bar  -->
         <div class="bar-container">
           <div class ="bar" :style="{ width: (currentHabit.habit_progress*100) + '%'}" />
@@ -35,7 +35,7 @@
       <!-- <p> {{noHabitMessage}}</p> -->
 
       <!--Habit Index-->
-      <div v-for="(habit, habitIndex) in category.habits" class="category-habits">
+      <div v-for="(habit, habitIndex, habitKey) in category.habits" :key="habitKey" class="category-habits">
         <button type="button" class="btn btn-link  btn-lg" v-on:click="setCurrentHabit(habitIndex)">{{ habit.name }} </button>
       </div>
     </div>
@@ -53,10 +53,9 @@
 
           <form v-on:submit.prevent="editCurrentHabit()" class="edit-habit">
             <div class="modal-body" >
-            
-              Name:<input type="text" class="form-control" v-model="currentHabit.name">
-              Notes:<input type="text" class="form-control" v-model="currentHabit.notes">
-              Frequency:<input type="number" class="form-control" v-model="currentHabit.frequency">
+              Name:<input type="text" class="form-control" v-model="currentHabit.name" required>
+              Notes:<input type="text" class="form-control" v-model="currentHabit.notes" >
+              Frequency:<input type="number" class="form-control" v-model="currentHabit.frequency" required>
               <label for="factorSelect">Factor:</label>
                 <select class="form-control" id="factorSelect" v-model="currentHabit.factor" required>
                   <option v-bind:value="28">per Day</option>
@@ -83,7 +82,7 @@
               <!-- Category Select -->
               <div class="form-group">
                 <label for="categorySelect">Category:</label>
-                <select class="form-control" id="categorySelect" v-model="currentHabit.category_id">
+                <select class="form-control" id="categorySelect" v-model="currentHabit.category_id" required>
                   <option v-for="category in categories" v-bind:value="category.id">{{ category.name }}</option>
                 </select>
               </div>
@@ -144,9 +143,12 @@ export default {
       currentHabit: {},
       errors: [],
       durationOrDate: 1,
+      noHabitMessage: "",
+      habitKey: "",
     };
   },
-  created: function () {
+  created: function () {},
+  mounted: function () {
     axios.get(`/api/categories`).then((response) => {
       this.categories = response.data;
     });
@@ -154,6 +156,9 @@ export default {
       console.log("Categories: ", response.data);
       this.category = response.data;
       this.currentHabit = this.category.habits[0];
+      if (this.category.habits.length < 1) {
+        this.noHabitMessage = "No Habits Yet";
+      }
     });
   },
   methods: {
@@ -188,7 +193,8 @@ export default {
       axios
         .patch(`/api/habits/${this.currentHabit.id}`, params)
         .then((response) => {
-          console.log("Success", response.data);
+          console.log("Habit Saved", response.data);
+          this.currentHabit = response.data;
         })
         .catch((response) => (error) => {
           this.errors = error.response.data.errors;
@@ -197,11 +203,11 @@ export default {
     deleteCurrentHabit: function () {
       axios.delete(`/api/habits/${this.currentHabit.id}`);
       this.$forceUpdate(this.categories);
-      // this.$router.go(`/categories/${this.category.id}`);
     },
-    // forceRerender() {
-    //   this.habitKey += 1;
-    // },
+    forceRerender() {
+      this.habitKey += 1;
+      console.log(this.habitKey);
+    },
 
     addComplete: function () {
       var params = {
@@ -209,7 +215,7 @@ export default {
       };
       axios.post("/api/completes", params).then((response) => {
         console.log("Complete Added", response.data);
-        this.$router.push("/categories/");
+        this.currentHabit.habit_progress = response.data.habit_progress;
       });
     },
 
@@ -221,7 +227,7 @@ export default {
         .delete(`/api/completes/${this.currentHabit.id}`)
         .then((response) => {
           console.log("Complete Removed");
-          this.$router.push(`categories/${this.category.id}`);
+          this.currentHabit.habit_progress = response.data.habit_progress;
         });
     },
     getHabitProgress: function (progress) {
