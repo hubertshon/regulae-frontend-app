@@ -16,7 +16,7 @@
       </div>
 
 
-      <div class="form-group" required>
+      <div class="form-group">
         <div class="form-check-inline">
           <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1" v-model="durationOrDate">
           <label class="form-check-label" for="inlineRadio1">Number of Months</label>

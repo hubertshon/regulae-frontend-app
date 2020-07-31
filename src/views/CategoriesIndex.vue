@@ -27,19 +27,21 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body" >
-            <form>
+          <form v-on:submit.prevent="editCurrentCategory()">
+            <div class="modal-body" >
+            
               Category Name: <input type="text" class="form-control" v-model="currentCategory.name" required>
               Category Statement: <input type="text" class="form-control" v-model="currentCategory.statement" value="Category Name">
               Image URL: <input type="text" class="form-control" v-model="currentCategory.image_url" value="Image URL">
-            </form>
-            <p class="text-danger" v-for="error in errors"> {{error}} </p>
-          </div>
-          <div class="modal-footer" v-on:submit.prevent="editCurrentCategory()">
-            <button type="button" style="color:red" class="btn btn-link" v-on:click="deleteCurrentCategory()" data-dismiss="modal">Delete Category</button>
-            <button type="button" class="btn btn-secondary" v-on:click="editCurrentCategory()" data-dismiss="modal">Save Changes</button>
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-          </div>
+            
+              <p class="text-danger" v-for="error in errors"> {{error}} </p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" style="color:red" class="btn btn-link" v-on:click="deleteCurrentCategory()" data-dismiss="modal">Delete Category</button>
+              <input type="submit" class="btn btn-secondary" value="Save Changes">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -100,7 +102,7 @@ export default {
       axios
         .patch(`/api/categories/${this.currentCategory.id}`, params)
         .then((response) => {
-          this.$router.push("/categories");
+          console.log("Category Edited", response.data);
         })
         .catch((error) => {
           this.errors = error.response.data.errors;

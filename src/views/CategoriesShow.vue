@@ -4,11 +4,11 @@
     <h2>{{ category.name }}</h2>
     <h5>{{ category.statement }}</h5>
     <p>{{ category.image_url }}</p>
-
+    <p> {{noHabitMessage}} </p>
     <!-- Habit Info -->
     <div class="container" >
       <div v-show="currentHabit.id > 0" class="current-habit">
-        <p> {{ noHabitMessage }}</p>
+        
         <!-- Progress Bar  -->
         <div class="bar-container">
           <div class ="bar" :style="{ width: (currentHabit.habit_progress*100) + '%'}" />
@@ -17,8 +17,9 @@
         <!-- Habit Details -->
         <h5> {{ currentHabit.name }}</h5>
         <h6>Progress: {{ getHabitProgress(currentHabit.habit_progress) }}%</h6>
-        <p>Notes: {{ currentHabit.notes }}</p>
+        <p v-if="currentHabit.notes">Notes: {{ currentHabit.notes }}</p>
         <p>Frequency: {{ currentHabit.frequency }} time(s) / {{ habitTranslate(currentHabit.factor) }}</p>
+  
         <p>Total: {{ currentHabit.total }}</p>
         <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#habitModal">
         Edit Habit
@@ -31,16 +32,13 @@
         </button>
       </div>
 
-      <!--No-Habit Message -->
-      <!-- <p> {{noHabitMessage}}</p> -->
-
       <!--Habit Index-->
       <div v-for="(habit, habitIndex, habitKey) in category.habits" :key="habitKey" class="category-habits">
         <button type="button" class="btn btn-link  btn-lg" v-on:click="setCurrentHabit(habitIndex)">{{ habit.name }} </button>
       </div>
     </div>
 
-    <!--Habit Modal -->
+    <!--Edit Habit Modal -->
     <div class="modal fade" id="habitModal" tabindex="-1" role="dialog" aria-labelledby="habitModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -54,7 +52,7 @@
           <form v-on:submit.prevent="editCurrentHabit()" class="edit-habit">
             <div class="modal-body" >
               Name:<input type="text" class="form-control" v-model="currentHabit.name" required>
-              Notes:<input type="text" class="form-control" v-model="currentHabit.notes" >
+              Notes:<input type="text" class="form-control" v-model="currentHabit.notes" required>
               Frequency:<input type="number" class="form-control" v-model="currentHabit.frequency" required>
               <label for="factorSelect">Factor:</label>
                 <select class="form-control" id="factorSelect" v-model="currentHabit.factor" required>
@@ -93,7 +91,8 @@
             <!-- Buttons -->
             <div class="modal-footer">
               <button type="button" style="color:red" class="btn btn-link" v-on:click="deleteCurrentHabit()" data-dismiss="modal">Delete Habit</button>
-              <input type ="submit" class="btn btn-success" value="Save Changes" v-on:click="editCurrentHabit()" data-dismiss="modal">
+              <input type ="submit" class="btn btn-success" value="Save Changes">
+
               <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
             </div>
           </form>
@@ -144,7 +143,6 @@ export default {
       errors: [],
       durationOrDate: 1,
       noHabitMessage: "",
-      habitKey: "",
     };
   },
   created: function () {},
@@ -152,14 +150,16 @@ export default {
     axios.get(`/api/categories`).then((response) => {
       this.categories = response.data;
     });
-    axios.get(`/api/categories/${this.$route.params.id}`).then((response) => {
-      console.log("Categories: ", response.data);
-      this.category = response.data;
-      this.currentHabit = this.category.habits[0];
-      if (this.category.habits.length < 1) {
-        this.noHabitMessage = "No Habits Yet";
-      }
-    });
+    axios
+      .get(`/api/categories/${this.$route.params.id}`)
+      .then((response) => {
+        console.log("Categories: ", response.data);
+        this.category = response.data;
+        this.currentHabit = this.category.habits[0];
+      })
+      .catch((error) => {
+        this.errors = error.response.data.errors;
+      });
   },
   methods: {
     habitTranslate: function (hFactor) {
@@ -203,10 +203,6 @@ export default {
     deleteCurrentHabit: function () {
       axios.delete(`/api/habits/${this.currentHabit.id}`);
       this.$forceUpdate(this.categories);
-    },
-    forceRerender() {
-      this.habitKey += 1;
-      console.log(this.habitKey);
     },
 
     addComplete: function () {

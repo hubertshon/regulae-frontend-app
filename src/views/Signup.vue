@@ -57,6 +57,7 @@ export default {
         .post("/api/users", params)
         .then((response) => {
           this.message = "Account Created";
+          this.$router.push("/");
         })
         .catch((error) => {
           this.errors = error.response.data.errors;

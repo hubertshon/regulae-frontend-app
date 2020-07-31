@@ -23,18 +23,18 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
-            <form>
-              First Name: <input class="form-control" type ="text" v-model="user_info.first_name" required>
-              Last Name: <input class="form-control" type ="text" v-model="user_info.last_name" required>
-              Email: <input class="form-control" type ="text" v-model="user_info.email" required>
+            <form v-on:submit.prevent="editUser()">
+              <div class="modal-body">
+                First Name: <input type="text" class="form-control"  v-model="user_info.first_name" required>
+                Last Name: <input type="text" class="form-control"  v-model="user_info.last_name" required>
+                Email: <input type="text" class="form-control"  v-model="user_info.email" required>
+              </div>
+              <div class="modal-footer">
+                <button type="button" style="color:red" class="btn btn-link"  data-dismiss="modal">Delete Account</button>
+                <input type="submit" class="btn btn-secondary" value="Save Changes">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+              </div>
             </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" style="color:red" class="btn btn-link" v-on:click="deleteUser()" data-dismiss="modal">Delete Account</button>
-            <button type="button" class="btn btn-secondary" v-on:click="editUser()" data-dismiss="modal"> Save Changes</button>
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-          </div>
         </div>
       </div>
     </div>
