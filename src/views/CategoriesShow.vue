@@ -20,7 +20,7 @@
         <p v-if="currentHabit.notes">Notes: {{ currentHabit.notes }}</p>
         <p>Frequency: {{ currentHabit.frequency }} time(s) / {{ habitTranslate(currentHabit.factor) }}</p>
   
-        <p>Total: {{ currentHabit.total }}</p>
+        <p>Total: {{ currentHabit.completes.length }} / {{ currentHabit.total }}</p>
         <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#habitModal">
         Edit Habit
         </button>

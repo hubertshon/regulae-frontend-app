@@ -1,20 +1,16 @@
 <template>
+  <!-- Category Info -->
   <div class="categoriesindex">
     <div class="categories" v-for="(category, categoryIndex) in categories">
       <router-link :to="`/categories/${category.id}`" class="category-title">{{ category.name }}</router-link>
       <p>{{ category.statement }}</p>
+      <progress-ring radius="75" stroke="2" :progress="getCategoryProgress(category)"></progress-ring>
+      
+      
       <h4>{{ getCategoryProgress(category) }}%</h4>
       <button type="button" class="btn btn-light" data-toggle="modal" data-target="#categoryModal" v-on:click="setCurrentCategory(categoryIndex)">
         Edit Category
       </button>
-
-      <!-- <div v-for="(habit, habitIndex, habitKey) in category.habits" :key="habitKey" class="category-habits">
-        <button type="button" class="btn btn-link  btn-sm">{{ habit.name }} </button>
-
-        <!-- <div class="ctg-idx-bar-container">
-          <div class ="ctg-idx-bar" :style="{ width: (habit.habit_progress*100) + '%'}" />
-          </div>
-        </div> -->
       </div>
 
     <!-- Category Modal -->
@@ -35,7 +31,21 @@
               Image URL: <input type="text" class="form-control" v-model="currentCategory.image_url" value="Image URL">
             
               <p class="text-danger" v-for="error in errors"> {{error}} </p>
+
+              <div class="form-group">
+                <label for="colorSelect">Color:</label>
+                <select class="form-control" id="colors">
+                  <option> Blue</option>
+                  <option> Red</option>
+                  <option> Gray</option>
+                  <option> Green</option>
+                  <option> Orange</option>
+                  <option> Magenta</option>
+                </select>
+              </div>
             </div>
+            
+
             <div class="modal-footer">
               <button type="button" style="color:red" class="btn btn-link" v-on:click="deleteCurrentCategory()" data-dismiss="modal">Delete Category</button>
               <input type="submit" class="btn btn-secondary" value="Save Changes">
@@ -72,17 +82,28 @@
   height: 100%;
   width: 0%;
 }
+
+circle {
+  transition: stroke-dashoffset 0.35s;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
 </style>
 
 <script>
 import axios from "axios";
+import ProgressRing from "../components/ProgressRing.vue";
 export default {
+  components: {
+    ProgressRing,
+  },
   data: function () {
     return {
       categories: [],
       currentCategory: {},
       errors: [],
       categoryProgress: "",
+      fontcolor: "green",
     };
   },
   created: function () {
@@ -119,8 +140,8 @@ export default {
     getCategoryProgress: function (category) {
       return Math.round(category.category_progress * 100);
     },
-    getHabitProgress: function (progress) {
-      return Math.round(progress * 100);
+    getHabitProgress: function (categoryProgress) {
+      return Math.round(categoryProgress * 100);
     },
   },
 };

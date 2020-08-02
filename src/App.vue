@@ -13,6 +13,8 @@
       </button>
     </div>
 
+  
+
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="User Info" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
