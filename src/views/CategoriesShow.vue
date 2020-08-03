@@ -4,10 +4,7 @@
     <h2>{{ category.name }}</h2>
     <h5>{{ category.statement }}</h5>
 
-       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-    <path :d="category.image_url"/>
-  </svg>
-
+       <inline-svg :src="category.image_url" class="icon" />
     <p> {{noHabitMessage}} </p>
     <!-- Habit Info -->
     <div class="container" >
@@ -134,11 +131,21 @@
   height: 100%;
   width: 0%;
 }
+
+.icon {
+  fill: blue;
+  width: 3em;
+  height: 3em;
+}
 </style>
 
 <script>
 import axios from "axios";
+import InlineSvg from "vue-inline-svg";
 export default {
+  components: {
+    InlineSvg,
+  },
   data: function () {
     return {
       category: [],

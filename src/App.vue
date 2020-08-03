@@ -76,7 +76,11 @@ h2 {
 </style>
 <script>
 import axios from "axios";
+import InlineSvg from 'vue-inline-svg';
 export default {
+  components: {
+    InlineSvg
+  },
   data: function () {
     return {
       user_info: {},
