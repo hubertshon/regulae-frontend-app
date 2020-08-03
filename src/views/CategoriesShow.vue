@@ -3,7 +3,11 @@
     <!--Category Info-->
     <h2>{{ category.name }}</h2>
     <h5>{{ category.statement }}</h5>
-    <p>{{ category.image_url }}</p>
+
+       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <path :d="category.image_url"/>
+  </svg>
+
     <p> {{noHabitMessage}} </p>
     <!-- Habit Info -->
     <div class="container" >
@@ -33,7 +37,7 @@
       </div>
 
       <!--Habit Index-->
-      <div v-for="(habit, habitIndex, habitKey) in category.habits" class="category-habits">
+      <div v-for="(habit, habitIndex) in category.habits" class="category-habits">
         <button type="button" class="btn btn-link  btn-lg" v-on:click="setCurrentHabit(habitIndex)">{{ habit.name }} </button>
       </div>
     </div>
