@@ -33,7 +33,7 @@
       </div>
 
       <!--Habit Index-->
-      <div v-for="(habit, habitIndex, habitKey) in category.habits" :key="habitKey" class="category-habits">
+      <div v-for="(habit, habitIndex, habitKey) in category.habits" class="category-habits">
         <button type="button" class="btn btn-link  btn-lg" v-on:click="setCurrentHabit(habitIndex)">{{ habit.name }} </button>
       </div>
     </div>
@@ -212,6 +212,7 @@ export default {
       axios.post("/api/completes", params).then((response) => {
         console.log("Complete Added", response.data);
         this.currentHabit.habit_progress = response.data.habit_progress;
+        this.currentHabit.completes = response.data.completes;
       });
     },
 
@@ -224,6 +225,7 @@ export default {
         .then((response) => {
           console.log("Complete Removed");
           this.currentHabit.habit_progress = response.data.habit_progress;
+          this.currentHabit.completes = response.data.completes;
         });
     },
     getHabitProgress: function (progress) {

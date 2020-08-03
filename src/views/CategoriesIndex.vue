@@ -2,9 +2,9 @@
   <!-- Category Info -->
   <div class="categoriesindex">
     <div class="categories" v-for="(category, categoryIndex) in categories">
-      <router-link :to="`/categories/${category.id}`" class="category-title">{{ category.name }}</router-link>
-      <p>{{ category.statement }}</p>
-      <progress-ring radius="75" stroke="2" :progress="getCategoryProgress(category)"></progress-ring>
+      <router-link :to="`/categories/${category.id}`" class="category-title" >{{ category.name }}</router-link>
+      <p :style="{color: category.color}">{{ category.statement }}</p>
+      <progress-ring :progress="getCategoryProgress(category)"></progress-ring>
       
       
       <h4>{{ getCategoryProgress(category) }}%</h4>
@@ -103,7 +103,6 @@ export default {
       currentCategory: {},
       errors: [],
       categoryProgress: "",
-      fontcolor: "green",
     };
   },
   created: function () {
@@ -119,6 +118,7 @@ export default {
         name: this.currentCategory.name,
         statement: this.currentCategory.statement,
         image_url: this.currentCategory.image_url,
+        color: this.currentCategory.color,
       };
       axios
         .patch(`/api/categories/${this.currentCategory.id}`, params)

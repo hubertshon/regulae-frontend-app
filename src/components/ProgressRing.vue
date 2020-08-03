@@ -2,18 +2,18 @@
   <div>
     
     <svg
-      :height="radius * 2"
-      :width="radius * 2"
+      :height="75 * 2"
+      :width="75 * 2"
      >
        <circle
       stroke="lightgreen"
          :stroke-dasharray="circumference + ' ' + circumference"
          :style="{strokeDashoffset: strokeDashoffset }"
-         :stroke-width="stroke"
+         :stroke-width="2"
          fill="transparent"
          :r="normalizedRadius"
-         :cx="radius"
-         :cy="radius"
+         :cx="75"
+         :cy="75"
       />
     </svg>
   
@@ -37,7 +37,7 @@ export default {
     stroke: Number,
   },
   data: function () {
-    const normalizedRadius = this.radius - this.stroke * 2;
+    const normalizedRadius = 75 - 2 * 2;
     const circumference = normalizedRadius * 2 * Math.PI;
     return {
       // progress: "",
