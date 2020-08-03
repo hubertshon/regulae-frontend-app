@@ -2,7 +2,7 @@
   <div id="prog-circle">
     <svg :height="75 * 2" :width="75 * 2">
       <circle
-        stroke="darkgray"
+        stroke="white"
         :stroke-dasharray="circumference + ' ' + circumference"
         :style="{ strokeDashoffset: strokeDashoffset }"
         :stroke-width="2"

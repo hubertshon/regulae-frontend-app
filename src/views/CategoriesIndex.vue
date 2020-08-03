@@ -3,19 +3,17 @@
   <div class="categoriesindex">
     <div class="categories" v-for="(category, categoryIndex) in categories">
       <div class="row">
-        <div class="col-md-4 mb30">
-          <div class="card">
-            <router-link
-              :to="`/categories/${category.id}`"
-              class="category-title"
-              >{{ category.name }}</router-link
-            >
+        <div class="col-lg-4 mb30">
+          <div :style="{ backgroundColor: category.color }" class="card">
             <p :style="{ color: category.color }">{{ category.statement }}</p>
             <progress-ring
               :progress="getCategoryProgress(category)"
             ></progress-ring>
 
             <h4>{{ getCategoryProgress(category) }}%</h4>
+            <a :href="`/categories/${category.id}`" class="category-title">{{
+              category.name
+            }}</a>
             <div v-for="habit in category.habits">
               <p>{{ habit.name }}</p>
               <div class="ctg-bar-container">
@@ -27,9 +25,11 @@
             </div>
             <button
               type="button"
-              class="btn btn-light"
+              :style="{ minWidth: 100 }"
+              class="btn btn-outline-light btn-sm"
               data-toggle="modal"
               data-target="#categoryModal"
+              id="edit-category-button"
               v-on:click="setCurrentCategory(categoryIndex)"
             >
               Edit Category
@@ -133,24 +133,42 @@
 </template>
 
 <style>
-#card {
-  width: 500px;
-  height: 300px;
+.card {
+  background-image: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.208),
+    rgba(196, 196, 196, 0.125)
+  );
+  margin: 2em;
+  border-radius: 0.4em;
+  box-shadow: 0px 20px 30px 0 rgba(0, 101, 20, 0.16),
+    0 4px 4px 0 rgba(0, 0, 0, 0.15);
+  text-align: center;
+  max-width: 275px;
 }
+
+.card p {
+  text-align: left;
+  margin-left: 10px;
+}
+
 .category-title {
   font-weight: bold;
-  font-size: 1.6em;
+  font-size: 2em;
+  margin: 10px;
+  padding: 1.5em, 0, 1.5em, 0;
+  word-wrap: normal;
 }
 
 .ctg-bar-container {
   text-align: center;
-  width: 175px;
-  height: 2px;
-  margin: 40px;
-  background-color: lightgray;
+  width: 225px;
+  height: 2.4px;
+  margin: 15px;
+  background-color: rgba(255, 255, 255, 0.571);
 }
 .ctg-bar {
-  background-color: rgb(65, 65, 65);
+  background-color: rgb(255, 255, 255);
   height: 100%;
   width: 0%;
 }
@@ -159,6 +177,16 @@ circle {
   transition: stroke-dashoffset 0.35s;
   transform: rotate(-90deg);
   transform-origin: 50% 50%;
+}
+#edit-category-button {
+  margin: 15px;
+  padding: 5px, 10px, 10px, 10px;
+}
+
+p,
+a,
+h4 {
+  color: white;
 }
 </style>
 

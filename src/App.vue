@@ -46,29 +46,36 @@
         <div class="collapse navbar-collapse" id="navbar-demos">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link active" href="#home">Welcome</a>
+              <a class="nav-link active" href="/">Welcome</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="websites">Website Templates</a>
+              <a class="nav-link" href="/logout">Log Out</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/Tutorial">Tutorial </a>
+              <a class="nav-link" href="/tutorial">Tutorial </a>
             </li>
             <li class="nav-item" v-if="isLoggedIn()">
               <a class="nav-link" href="/categories">Categories</a>
             </li>
-            <li class="nav-item" v-if="isLoggedIn()">
-              <a type="button" class="btn btn-success mb5 btn-rounded" href="/categories/new">Add Category</a>
+            <li v-if="isLoggedIn()">
+              <a type="button" class="btn btn-success mb5" href="/categories/new">
+              Add Category</a>
             </li>
-            <li class="nav-item" v-if="isLoggedIn()">
-              <a type="button" class="btn btn-success mb5 btn-rounded" href="/habits/new">Add Habit</a>
+            <li v-if="isLoggedIn()">
+              <a type="button" class="btn btn-success mb5" href="/habits/new">Add Habit</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" v-if="!isLoggedIn()">
               <a
-                target="_blank"
-                href="https://wrapbootstrap.com/theme/assan-multipurpose-24-themes-admin-WB05F069P/?ref=wb_rakesh"
+                href="/login"
                 class="btn bg-primary btn-lg text-white"
                 >Log In</a
+              >
+            </li>
+            <li class="nav-item" v-if="!isLoggedIn()">
+              <a         
+                href="/signup"
+                class="btn bg-primary btn-lg text-white"
+                >Sign Up</a
               >
             </li>
           </ul>
@@ -197,7 +204,17 @@
   </div>
 </template>
 
-<style></style>
+<style>
+* {
+  font-family: 'Mukta', sans-serif;
+}
+body {
+  background-color: rgb(240, 240, 240)
+}
+nav {
+  padding-bottom: 100px;
+}
+</style>
 <script>
 import axios from "axios";
 import InlineSvg from "vue-inline-svg";
