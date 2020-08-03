@@ -25,7 +25,6 @@ circle {
 import axios from "axios";
 
 export default {
-  components: {},
   data: function () {
     return {
       message: "Regulae",
@@ -40,7 +39,6 @@ export default {
       var today = new Date();
       var recentCompletes = [];
       const oneDay = 24 * 60 * 60 * 1000;
-      console.log(this.habits[0].completes[0]);
       for (var i = 0; i < this.habits.length; i++) {
         if (this.habits[i].factor === 28) {
           for (var c = 0; c < this.habits[i].completes.length; c++) {
@@ -53,6 +51,7 @@ export default {
           if (recentCompletes.length < this.habits[i].frequency * 7) {
             this.upcomingHabits.push(this.habits[i].name);
           }
+          recentCompletes = [];
         } else if (this.habits[i].factor === 4) {
           for (var d = 0; d < this.habits[i].completes.length; d++) {
             habitDate = Date.parse(this.habits[i].completes[d].date);
@@ -64,6 +63,7 @@ export default {
           if (recentCompletes.length < this.habits[i].frequency) {
             this.upcomingHabits.push(this.habits[i].name);
           }
+          recentCompletes = [];
         } else if (this.habits[i].factor === 1) {
           for (var m = 0; m < this.habits[i].completes.length; m++) {
             habitDate = Date.parse(this.habits[i].completes[m].date);
@@ -75,9 +75,11 @@ export default {
           if (recentCompletes.length < this.habits[i].frequency) {
             this.upcomingHabits.push(this.habits[i].name);
           }
+          recentCompletes = [];
         }
       }
       console.log("Upcoming Habits", this.upcomingHabits);
+      return this.upcomingHabits;
     });
   },
   mounted: function () {},

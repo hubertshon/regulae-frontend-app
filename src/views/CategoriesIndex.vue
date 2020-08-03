@@ -28,21 +28,22 @@
             
               Category Name: <input type="text" class="form-control" v-model="currentCategory.name" required>
               Category Statement: <input type="text" class="form-control" v-model="currentCategory.statement" value="Category Name">
-              Image URL: <input type="text" class="form-control" v-model="currentCategory.image_url" value="Image URL">
+              Image URL: <input type="file" class="form-control" v-on:change="setFile($event)" ref="fileInput">
             
               <p class="text-danger" v-for="error in errors"> {{error}} </p>
 
               <div class="form-group">
                 <label for="colorSelect">Color:</label>
                 <select class="form-control" id="colors">
-                  <option> Blue</option>
-                  <option> Red</option>
-                  <option> Gray</option>
-                  <option> Green</option>
-                  <option> Orange</option>
-                  <option> Magenta</option>
+                  <option>"Blue"</option>
+                  <option>"Red"</option>
+                  <option>"Gray"</option>
+                  <option>"Green"</option>
+                  <option>"Orange"</option>
+                  <option>"Magenta"</option>
                 </select>
               </div>
+              
             </div>
             
 
@@ -114,14 +115,14 @@ export default {
 
   methods: {
     editCurrentCategory: function () {
-      var params = {
-        name: this.currentCategory.name,
-        statement: this.currentCategory.statement,
-        image_url: this.currentCategory.image_url,
-        color: this.currentCategory.color,
-      };
+      var formData = new FormData();
+      formData.append("name", this.currentCategory.name);
+      formData.append("statement", this.currentCategory.statement);
+      formData.append("image_file", this.currentCategory.image);
+      formData.append("color", this.currentCategory.color);
+
       axios
-        .patch(`/api/categories/${this.currentCategory.id}`, params)
+        .patch(`/api/categories/${this.currentCategory.id}`, formData)
         .then((response) => {
           console.log("Category Edited", response.data);
         })
@@ -142,6 +143,11 @@ export default {
     },
     getHabitProgress: function (categoryProgress) {
       return Math.round(categoryProgress * 100);
+    },
+    setFile: function () {
+      if (event.target.files.length > 0) {
+        this.currentCategory.image = event.target.files[0];
+      }
     },
   },
 };

@@ -4,6 +4,19 @@
       *Name:<input class="form-control" type="text" v-model="newCategoryName" required>
       Statement:<input type="text" class="form-control"  v-model="newCategoryStatement">
       Image URL:<input type="file" class="form-control"  v-on:change="setFile($event)" ref="fileInput">
+
+      <div class="form-group">
+        <label for="colorSelect">Color:</label>
+        <select class="form-control" id="colors">
+          <option>Blue</option>
+          <option>Red</option>
+          <option>Gray</option>
+          <option>Green</option>
+          <option>Orange</option>
+          <option>Magenta</option>
+        </select>
+      </div>
+      
       <input type="submit" class="btn btn-success btn" value="Create Category">
     </form>
 
@@ -43,6 +56,7 @@ export default {
       formData.append("name", this.newCategoryName);
       formData.append("statement", this.newCategoryStatement);
       formData.append("image_file", this.newCategoryImage);
+      formData.appen("color", this.currentCategory.color);
 
       axios.post("/api/categories", formData).then((response) => {
         console.log("Success", response.data);

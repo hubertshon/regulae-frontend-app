@@ -6,7 +6,7 @@
       :width="75 * 2"
      >
        <circle
-      stroke="lightgreen"
+      stroke="darkgray"
          :stroke-dasharray="circumference + ' ' + circumference"
          :style="{strokeDashoffset: strokeDashoffset }"
          :stroke-width="2"

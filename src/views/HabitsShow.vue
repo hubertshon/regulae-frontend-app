@@ -39,6 +39,7 @@ export default {
       category: "",
       birds: ["duck", "goose", "owl"],
       birdKey: 0,
+      message: "",
     };
   },
   created: function () {
@@ -59,6 +60,12 @@ export default {
     },
     forceRerender: function () {
       this.birdKey += 1;
+    },
+    checkHabitComplete: function () {
+      if (this.habit.habit_progress === 100) {
+        this.message = "Congratulations! You have completed a habit!";
+        console.log("It's 100");
+      }
     },
   },
 };

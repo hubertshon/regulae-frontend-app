@@ -3,7 +3,6 @@
     <!--Category Info-->
     <h2>{{ category.name }}</h2>
     <h5>{{ category.statement }}</h5>
-
        <inline-svg :src="category.image_url" class="icon" />
     <p> {{noHabitMessage}} </p>
     <!-- Habit Info -->
@@ -16,6 +15,7 @@
         </div>
 
         <!-- Habit Details -->
+        <h5 v-show="currentHabit.habit_progress === 1">{{ completeMessage }}</h5>
         <h5> {{ currentHabit.name }}</h5>
         <h6>Progress: {{ getHabitProgress(currentHabit.habit_progress) }}%</h6>
         <p v-if="currentHabit.notes">Notes: {{ currentHabit.notes }}</p>
@@ -154,6 +154,7 @@ export default {
       errors: [],
       durationOrDate: 1,
       noHabitMessage: "",
+      completeMessage: "Habit Completed!",
     };
   },
   created: function () {},

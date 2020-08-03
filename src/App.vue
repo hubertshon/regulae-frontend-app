@@ -2,7 +2,7 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
+      <router-link to="/tutorial">Tutorial</router-link> |
       <router-link v-if="!isLoggedIn()" to="/signup">Signup</router-link> |
       <router-link v-if="!isLoggedIn()" to="/login">Login</router-link><router-link v-if="isLoggedIn()" to="/logout" >Logout</router-link> |
       <router-link v-if="isLoggedIn()" to="/categories">Categories</router-link> | 
@@ -47,7 +47,7 @@
 
 <style>
 #app {
-  background-color: rgb(240, 240, 240);
+  background-color: rgb(255, 255, 255);
 }
 /* font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -76,10 +76,10 @@ h2 {
 </style>
 <script>
 import axios from "axios";
-import InlineSvg from 'vue-inline-svg';
+import InlineSvg from "vue-inline-svg";
 export default {
   components: {
-    InlineSvg
+    InlineSvg,
   },
   data: function () {
     return {
