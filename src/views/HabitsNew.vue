@@ -44,12 +44,12 @@
 </template>
 
 <style>
-#factorSelect {
+/* #factorSelect {
   width: 225px;
 }
 .form-group {
   width: 55%;
-}
+} */
 </style>
 
 <script>

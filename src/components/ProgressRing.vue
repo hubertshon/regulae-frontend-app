@@ -1,26 +1,24 @@
 <template>
-  <div>
-    
-    <svg
-      :height="75 * 2"
-      :width="75 * 2"
-     >
-       <circle
-      stroke="darkgray"
-         :stroke-dasharray="circumference + ' ' + circumference"
-         :style="{strokeDashoffset: strokeDashoffset }"
-         :stroke-width="2"
-         fill="transparent"
-         :r="normalizedRadius"
-         :cx="75"
-         :cy="75"
+  <div id="prog-circle">
+    <svg :height="75 * 2" :width="75 * 2">
+      <circle
+        stroke="darkgray"
+        :stroke-dasharray="circumference + ' ' + circumference"
+        :style="{ strokeDashoffset: strokeDashoffset }"
+        :stroke-width="2"
+        fill="transparent"
+        :r="normalizedRadius"
+        :cx="75"
+        :cy="75"
       />
     </svg>
-  
   </div>
 </template>
 
 <style>
+#prog-circle {
+  content: attr(progress);
+}
 circle {
   transition: stroke-dashoffset 0.35s;
   transform: rotate(-90deg);
@@ -36,7 +34,7 @@ export default {
     progress: Number,
     stroke: Number,
   },
-  data: function () {
+  data: function() {
     const normalizedRadius = 75 - 2 * 2;
     const circumference = normalizedRadius * 2 * Math.PI;
     return {
@@ -53,4 +51,3 @@ export default {
   },
 };
 </script>
-

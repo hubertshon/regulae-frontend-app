@@ -13,12 +13,11 @@
       <p>{{ bird }}</p>
       <button v-on:click="forceRerender()">Re Render</button>
     </div>
-
   </div>
 </template>
 
 <style>
-.habit-title {
+/* .habit-title {
   font-weight: bold;
 }
 
@@ -27,13 +26,13 @@
 }
 .category-habits {
   margin-top: 5%;
-}
+} */
 </style>
 
 <script>
 import axios from "axios";
 export default {
-  data: function () {
+  data: function() {
     return {
       habit: [],
       category: "",
@@ -42,14 +41,14 @@ export default {
       message: "",
     };
   },
-  created: function () {
+  created: function() {
     axios.get(`/api/habits/${this.$route.params.id}`).then((response) => {
       console.log("Habit: ", response.data);
       this.habit = response.data;
     });
   },
   methods: {
-    habitTranslate: function () {
+    habitTranslate: function() {
       if (this.category.habit.factor === 4) {
         return "Week";
       } else if (this.category.habit.factor === 28) {
@@ -58,10 +57,10 @@ export default {
         return "Month";
       }
     },
-    forceRerender: function () {
+    forceRerender: function() {
       this.birdKey += 1;
     },
-    checkHabitComplete: function () {
+    checkHabitComplete: function() {
       if (this.habit.habit_progress === 100) {
         this.message = "Congratulations! You have completed a habit!";
         console.log("It's 100");

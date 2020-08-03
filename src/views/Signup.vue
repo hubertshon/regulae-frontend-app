@@ -23,9 +23,6 @@
 </template>
 
 <style>
-.text-danger {
-  color: red;
-}
 </style>
 
 <script>

@@ -10,15 +10,6 @@
 </template>
 
 <style>
-h1 {
-  font-size: 3em;
-}
-
-circle {
-  transition: stroke-dashoffset 0.35s;
-  transform: rotate(-90deg);
-  transform-origin: 50% 50%;
-}
 </style>
 
 <script>

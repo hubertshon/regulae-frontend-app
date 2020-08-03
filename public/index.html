@@ -1,18 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title><%= htmlWebpackPlugin.options.title %></title>
-    <link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Welcome to assan v3.8</title>    
+        <!-- Bootstrap-->
+        <link href="/css/bootstrap.min.css" rel="stylesheet">
+        <!--fonts-->
+        <link href="/line-icons/line-icons.css" rel="stylesheet">
+        <link href="/css/animate.min.css" rel="stylesheet">
+        <link href="/css/style-demos.css" rel="stylesheet">
+    </head>
+    <body data-spy="scroll" data-offset="73" data-target="#navbar-demos">
+        <div id="app">
+
+            
+           
+        
+
+
+            
+        </div>
+        <script type="text/javascript" src="js/jquery.min.js"></script> 
+        <script type="text/javascript" src="js/bootstrap.min.js"></script> 
+        <script type="text/javascript" src="js/jquery.textillate.js"></script> 
+        <script type="text/javascript" src="js/jquery.lettering.js"></script> 
+        <script type="text/javascript" src="js/smooth-scroll.min.js"></script> 
+        <script type="text/javascript" src="js/jquery.preloader.min.js"></script> 
+        <script>
+            $(function () {
+                $('.tlt').textillate({
+                    loop: true,
+                    delay: 50
+                });
+                //auto close navbar-collapse on click a
+                $('.navbar a.nav-link').on('click', function () {
+                    $('.navbar-toggler:visible').click();
+                });
+                //smooth scroll
+                smoothScroll.init({
+                    selector: '[data-scroll]', // Selector for links (must be a class, ID, data attribute, or element tag)
+                    speed: 1000, // Integer. How fast to complete the scroll in milliseconds
+                    easing: 'easeInOutCubic', // Easing pattern to use
+                    offset: 71, // Integer. How far to offset the scrolling anchor location in pixels
+                    callback: function (anchor, toggle) {} // Function to run after scrolling
+                });
+                //preloader
+                $(window).preloader({
+                    delay: 500
+                });
+            });
+        </script>
+    </body>
 </html>
