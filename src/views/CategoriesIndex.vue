@@ -144,17 +144,19 @@
   box-shadow: 0px 20px 30px 0 rgba(0, 101, 20, 0.16),
     0 4px 4px 0 rgba(0, 0, 0, 0.15);
   text-align: center;
-  max-width: 275px;
+  max-width: 200px;
 }
 
 .card p {
   text-align: left;
   margin-left: 10px;
+  margin-bottom: 2px;
+  font-size: 0.75em;
 }
 
 .category-title {
   font-weight: bold;
-  font-size: 2em;
+  font-size: 1.5em;
   margin: 10px;
   padding: 1.5em, 0, 1.5em, 0;
   word-wrap: normal;
@@ -162,9 +164,9 @@
 
 .ctg-bar-container {
   text-align: center;
-  width: 225px;
-  height: 2.4px;
-  margin: 15px;
+  width: 160px;
+  height: 2.1px;
+  margin: 0 15px 15px 15px;
   background-color: rgba(255, 255, 255, 0.571);
 }
 .ctg-bar {
