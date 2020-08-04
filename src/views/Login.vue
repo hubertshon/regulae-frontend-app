@@ -1,15 +1,17 @@
 <template>
   <div class="login">
-    <h2>Login</h2>
-    <p class="text-danger" v-for="error in errors">{{ error }}</p>
-    <p v-if="message">{{ message }}</p>
-    <form v-on:submit.prevent="submit()" v-else>
-      <label>Email:</label>
-      <input type="email" v-model="email" />
-      <label>Password:</label>
-      <input type="password" v-model="password" />
-      <input type="submit" value="Submit" />
-    </form>
+    <div class="container">
+      <h2>Login</h2>
+      <p class="text-danger" v-for="error in errors">{{ error }}</p>
+      <p v-if="message">{{ message }}</p>
+      <form v-on:submit.prevent="submit()" v-else>
+        <label>Email:</label>
+        <input type="email" v-model="email" />
+        <label>Password:</label>
+        <input type="password" v-model="password" />
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
   </div>
 </template>
 
@@ -19,7 +21,7 @@
 import axios from "axios";
 
 export default {
-  data: function() {
+  data: function () {
     return {
       email: "",
       password: "",
@@ -28,7 +30,7 @@ export default {
     };
   },
   methods: {
-    submit: function() {
+    submit: function () {
       var params = {
         email: this.email,
         password: this.password,

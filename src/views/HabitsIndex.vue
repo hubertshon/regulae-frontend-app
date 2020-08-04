@@ -143,7 +143,7 @@ export default {
         })
         .attr("height", y.bandwidth())
         .style("stroke-width", 2)
-        .style("stroke", "white")
+        .style("stroke", "#F0F0F0")
         .style("fill-opacity", 0.2)
         .style("fill", function (d) {
           if (d) {

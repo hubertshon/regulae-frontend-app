@@ -1,30 +1,6 @@
 <template>
   <div id="app">
-    <!-- <div id="nav-links">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/tutorial">Tutorial</router-link> |
-      <router-link v-if="!isLoggedIn()" to="/signup">Signup</router-link> |
-      <router-link v-if="!isLoggedIn()" to="/login">Login</router-link
-      ><router-link v-if="isLoggedIn()" to="/logout">Logout</router-link> |
-      <router-link v-if="isLoggedIn()" to="/categories">Categories</router-link>
-      |
-      <router-link v-if="isLoggedIn()" to="/categories/new"
-        >Add Category</router-link
-      >
-      |
-      <router-link v-if="isLoggedIn()" to="/habits/new">Add Habit</router-link>
-      <button
-        v-if="isLoggedIn()"
-        type="button"
-        class="btn btn-primary"
-        data-toggle="modal"
-        data-target="#exampleModal"
-      >
-        Account Info
-      </button>
-    </div> -->
-    <!-- <div id="preloader">
-      <div id="preloader-inner"></div> -->
+    
     <nav class="navbar navbar-expand-lg navbar-light navbar-transparent bg-white fixed-top">
         <a
           class="navbar-brand font700"
@@ -55,32 +31,34 @@
               <a class="nav-link" href="/tutorial">Tutorial </a>
             </li>
             <li class="nav-item" v-if="isLoggedIn()">
+              <a class="nav-link" href="/habits">Habits Chart</a>
+            </li>
+            <li class="nav-item" v-if="isLoggedIn()">
               <a class="nav-link" href="/categories">Categories</a>
             </li>
             <li v-if="isLoggedIn()">
-              <a type="button" class="btn btn-success mb5" href="/categories/new">
-              Add Category</a>
+              <a type="button" class="btn btn-success mb5" href="/categories/new">New Category</a>
             </li>
             <li v-if="isLoggedIn()">
-              <a type="button" class="btn btn-success mb5" href="/habits/new">Add Habit</a>
+              <a type="button" class="btn btn-success mb5" href="/habits/new">New Habit</a>
             </li>
             <li class="nav-item" v-if="!isLoggedIn()">
               <a
                 href="/login"
-                class="btn bg-primary btn-lg text-white"
+                class="btn bg-primary mb5 text-white"
                 >Log In</a
               >
             </li>
             <li class="nav-item" v-if="!isLoggedIn()">
               <a         
                 href="/signup"
-                class="btn bg-primary btn-lg text-white"
+                class="btn btn-success mb5 text-white"
                 >Sign Up</a
               >
             </li>
           </ul>
         </div>
-      </nav>
+    </nav>
 
       <!-- Modal -->
       <div
@@ -89,8 +67,7 @@
         tabindex="-1"
         role="dialog"
         aria-labelledby="User Info"
-        aria-hidden="true"
-      >
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -154,9 +131,11 @@
           </div>
         </div>
       </div>
-
-      <router-view />
-
+      <!--Main Page-->
+      <div id="container">
+        <router-view />
+      </div>
+      <!--Footer-->
       <div class="bg-dark">
         <footer class="container text-left py-5">
           <div class="row">
@@ -199,20 +178,25 @@
             </div>
           </div>
         </footer>
-      </div>
     </div>
   </div>
 </template>
 
 <style>
 * {
-  font-family: 'Mukta', sans-serif;
+  font-family: "Raleway", sans-serif;
 }
 body {
-  background-color: rgb(240, 240, 240)
+  background-color: rgb(247, 247, 247);
+  height: 110vmax;
+  margin-top: 5vh;
 }
-nav {
-  padding-bottom: 100px;
+router-view {
+  margin-top: 200px;
+}
+
+nav .btn {
+  margin-right: 1vw;
 }
 </style>
 <script>
@@ -223,12 +207,12 @@ export default {
   components: {
     InlineSvg,
   },
-  data: function() {
+  data: function () {
     return {
       user_info: {},
     };
   },
-  created: function() {
+  created: function () {
     axios
       .get(`/api/users/${localStorage.getItem("user_id")}`)
       .then((response) => {
@@ -237,17 +221,17 @@ export default {
       });
   },
   methods: {
-    isLoggedIn: function() {
+    isLoggedIn: function () {
       return localStorage.getItem("jwt");
     },
-    getUserId: function() {
+    getUserId: function () {
       return localStorage.getItem("user_id");
     },
-    deleteUser: function() {
+    deleteUser: function () {
       axios.delete(`/api/users/${localStorage.getItem("user_id")}`);
       this.$router.push("/delete_confirm");
     },
-    editUser: function() {
+    editUser: function () {
       var params = {
         first_name: this.user_info.first_name,
         last_name: this.user_info.last_name,

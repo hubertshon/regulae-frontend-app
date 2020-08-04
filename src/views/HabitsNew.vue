@@ -1,5 +1,6 @@
 <template>
-  <div class="habits-new">
+  <div class="habit-new">
+    <h2 class="display-4">New Habit</h2>
     <form v-on:submit.prevent="createHabit()" class="new-habit">
 
       <div class="form-group">
@@ -16,7 +17,7 @@
       </div>
 
 
-      <div class="form-group">
+      <div class="form-group" id="durationSelect">
         <div class="form-check-inline">
           <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1" v-model="durationOrDate">
           <label class="form-check-label" for="inlineRadio1">Number of Months</label>
@@ -31,25 +32,36 @@
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group" id="categorySelect">
         <label for="categorySelect">*Category:</label>
         <select class="form-control" id="categorySelect" v-model="newHabitCategoryId" required>
           <option v-for="category in categories" v-bind:value="category.id">{{ category.name }}</option>
         </select>
       </div>
+
       <p v-for="error in errors">{{ error }}</p>
-      <input type="submit" value="Create Habit">
+      <input type="submit" class="btn btn-success" id="submit-button" value="Create Habit">
     </form>
   </div>
 </template>
 
 <style>
-/* #factorSelect {
-  width: 225px;
+.habit-new {
+  width: 60%;
+  margin: auto;
+  margin-top: 15vh;
 }
-.form-group {
-  width: 55%;
-} */
+
+.category-help {
+  margin-top: 5vh;
+}
+#factorSelect {
+  width: 10vw;
+}
+
+#durationSelect {
+  width: 20vw;
+}
 </style>
 
 <script>

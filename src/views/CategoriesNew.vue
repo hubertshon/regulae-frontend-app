@@ -1,5 +1,6 @@
 <template>
-  <div class="categories-new">
+  <div class="category-new">
+    <h2 class="display-4">New Category</h2>
     <form v-on:submit.prevent="createCategory()" class="new-category">
       *Name:<input class="form-control" type="text" v-model="newCategoryName" required>
       Statement:<input type="text" class="form-control"  v-model="newCategoryStatement">
@@ -26,13 +27,24 @@
 
       <h5>Arcu dictum varius duis at consectetur.</h5> 
       <p>Lectus sit amet est placerat in. Fusce ut placerat orci nulla pellentesque dignissim. Congue eu consequat ac felis donec et. Nisl rhoncus mattis rhoncus urna neque viverra justo nec ultrices. Commodo nulla facilisi nullam vehicula. Sed blandit libero volutpat sed cras ornare arcu. Et ultrices neque ornare aenean euismod. </p>
-
-    
     </div>
+
   </div>
 </template>
 
 <style>
+.category-new {
+  width: 60%;
+  margin: auto;
+  margin-top: 15vh;
+}
+
+.category-help {
+  margin-top: 5vh;
+}
+p {
+  color: black;
+}
 </style>
 
 <script>

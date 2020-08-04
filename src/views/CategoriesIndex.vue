@@ -1,39 +1,42 @@
 <template>
   <!-- Category Info -->
   <div class="categoriesindex">
-    <div class="categories" v-for="(category, categoryIndex) in categories">
+    <div class="container">
+    <div class="categories">
       <div class="row">
-        <div class="col-lg-4 mb30">
+        <div class="col-lg-4 mb30" v-for="(category, categoryIndex) in categories">
           <div :style="{ backgroundColor: category.color }" class="card">
-            <p :style="{ color: category.color }">{{ category.statement }}</p>
-            <progress-ring
-              :progress="getCategoryProgress(category)"
-            ></progress-ring>
+            <div class="container" id="card-container">
+              <!-- <p :style="{ color: category.color }">{{ category.statement }}</p> -->
+              <progress-ring
+                :progress="getCategoryProgress(category)"
+              ></progress-ring>
 
-            <h4>{{ getCategoryProgress(category) }}%</h4>
-            <a :href="`/categories/${category.id}`" class="category-title">{{
-              category.name
-            }}</a>
-            <div v-for="habit in category.habits">
-              <p>{{ habit.name }}</p>
-              <div class="ctg-bar-container">
-                <div
-                  class="ctg-bar"
-                  :style="{ width: habit.habit_progress * 100 + '%' }"
-                />
+              <h4>{{ getCategoryProgress(category) }}%</h4>
+              <a :href="`/categories/${category.id}`" class="category-title">{{
+                category.name
+              }}</a>
+              <div v-for="habit in category.habits">
+                <p>{{ habit.name }}</p>
+                <div class="ctg-bar-container">
+                  <div
+                    class="ctg-bar"
+                    :style="{ width: habit.habit_progress * 100 + '%' }"
+                  />
+                </div>
               </div>
+              <button
+                type="button"
+                :style="{ minWidth: 100 }"
+                class="btn btn-outline-light btn-sm"
+                data-toggle="modal"
+                data-target="#categoryModal"
+                id="edit-category-button"
+                v-on:click="setCurrentCategory(categoryIndex)"
+              >
+                Edit Category
+              </button>
             </div>
-            <button
-              type="button"
-              :style="{ minWidth: 100 }"
-              class="btn btn-outline-light btn-sm"
-              data-toggle="modal"
-              data-target="#categoryModal"
-              id="edit-category-button"
-              v-on:click="setCurrentCategory(categoryIndex)"
-            >
-              Edit Category
-            </button>
           </div>
         </div>
       </div>
@@ -129,29 +132,32 @@
         </div>
       </div>
     </div>
+    </div>
   </div>
 </template>
 
 <style>
 .card {
-  background-image: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.208),
-    rgba(196, 196, 196, 0.125)
-  );
-  margin: 2em;
-  border-radius: 0.4em;
+  margin: 1em;
+  /* border-radius: 0.4em; */
   box-shadow: 0px 20px 30px 0 rgba(0, 101, 20, 0.16),
     0 4px 4px 0 rgba(0, 0, 0, 0.15);
   text-align: center;
-  max-width: 200px;
+  /* max-width: 220px; */
 }
 
 .card p {
   text-align: left;
-  margin-left: 10px;
+  margin-left: 2px;
   margin-bottom: 2px;
+  padding: 0 2em 0 2em;
   font-size: 0.75em;
+}
+
+.card p,
+h4,
+a {
+  color: white;
 }
 
 .category-title {
@@ -164,7 +170,7 @@
 
 .ctg-bar-container {
   text-align: center;
-  width: 160px;
+  width: 6vm;
   height: 2.1px;
   margin: 0 15px 15px 15px;
   background-color: rgba(255, 255, 255, 0.571);
@@ -184,12 +190,6 @@ circle {
   margin: 15px;
   padding: 5px, 10px, 10px, 10px;
 }
-
-p,
-a,
-h4 {
-  color: white;
-}
 </style>
 
 <script>
@@ -199,7 +199,7 @@ export default {
   components: {
     ProgressRing,
   },
-  data: function() {
+  data: function () {
     return {
       categories: [],
       currentCategory: {},
@@ -207,7 +207,7 @@ export default {
       categoryProgress: "",
     };
   },
-  created: function() {
+  created: function () {
     axios.get("/api/categories").then((response) => {
       console.log("Categories: ", response.data);
       this.categories = response.data;
@@ -215,13 +215,12 @@ export default {
   },
 
   methods: {
-    editCurrentCategory: function() {
+    editCurrentCategory: function () {
       var formData = new FormData();
       formData.append("name", this.currentCategory.name);
       formData.append("statement", this.currentCategory.statement);
       formData.append("image_file", this.currentCategory.image);
-      formData.append("color", this.currentCategory.color);
-
+      // formData.append("color", this.currentCategory.color);
       axios
         .patch(`/api/categories/${this.currentCategory.id}`, formData)
         .then((response) => {
@@ -231,21 +230,21 @@ export default {
           this.errors = error.response.data.errors;
         });
     },
-    deleteCurrentCategory: function() {
+    deleteCurrentCategory: function () {
       axios.delete(`/api/categories/${this.currentCategory.id}`);
       this.$router.push("/categories");
     },
-    setCurrentCategory: function(index) {
+    setCurrentCategory: function (index) {
       this.currentCategory = this.categories[index];
       console.log(this.currentCategory);
     },
-    getCategoryProgress: function(category) {
+    getCategoryProgress: function (category) {
       return Math.round(category.category_progress * 100);
     },
-    getHabitProgress: function(categoryProgress) {
+    getHabitProgress: function (categoryProgress) {
       return Math.round(categoryProgress * 100);
     },
-    setFile: function() {
+    setFile: function () {
       if (event.target.files.length > 0) {
         this.currentCategory.image = event.target.files[0];
       }
