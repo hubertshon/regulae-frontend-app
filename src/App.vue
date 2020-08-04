@@ -218,6 +218,7 @@ nav {
 <script>
 import axios from "axios";
 import InlineSvg from "vue-inline-svg";
+
 export default {
   components: {
     InlineSvg,
