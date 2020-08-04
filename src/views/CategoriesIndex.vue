@@ -5,7 +5,7 @@
     <div class="categories">
       <div class="row">
         <div class="col-lg-4 mb30" v-for="(category, categoryIndex) in categories">
-          <div :style="{ backgroundColor: category.color }" class="card">
+          <div :style="{ backgroundColor: category.color }" class="card overflow-auto">
             <div class="container" id="card-container">
               <!-- <p :style="{ color: category.color }">{{ category.statement }}</p> -->
               <progress-ring
@@ -13,9 +13,9 @@
               ></progress-ring>
 
               <h4>{{ getCategoryProgress(category) }}%</h4>
-              <a :href="`/categories/${category.id}`" class="category-title">{{
+              <h1 :href="`/categories/${category.id}`">{{
                 category.name
-              }}</a>
+              }}</h1>
               <div v-for="habit in category.habits">
                 <p>{{ habit.name }}</p>
                 <div class="ctg-bar-container">
@@ -139,24 +139,28 @@
 <style>
 .card {
   margin: 1em;
-  /* border-radius: 0.4em; */
   box-shadow: 0px 20px 30px 0 rgba(0, 101, 20, 0.16),
     0 4px 4px 0 rgba(0, 0, 0, 0.15);
   text-align: center;
-  /* max-width: 220px; */
+  height: 80vh;
+}
+
+.card h1 {
+  padding-bottom: 0.5em;
 }
 
 .card p {
   text-align: left;
-  margin-left: 2px;
-  margin-bottom: 2px;
-  padding: 0 2em 0 2em;
-  font-size: 0.75em;
+  margin-left: 0;
+  margin-bottom: 5px;
+  padding-top: 1em 0 0 0;
+  font-size: 1em;
 }
 
 .card p,
 h4,
-a {
+a,
+h1 {
   color: white;
 }
 
@@ -171,7 +175,7 @@ a {
 .ctg-bar-container {
   text-align: center;
   width: 6vm;
-  height: 2.1px;
+  height: 3px;
   margin: 0 15px 15px 15px;
   background-color: rgba(255, 255, 255, 0.571);
 }

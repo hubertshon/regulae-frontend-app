@@ -37,10 +37,10 @@
               <a class="nav-link" href="/categories">Categories</a>
             </li>
             <li v-if="isLoggedIn()">
-              <a type="button" class="btn btn-success mb5" href="/categories/new">New Category</a>
+              <a type="button" class="btn btn-success mb5" href="/categories/new">NEW CATEGORY</a>
             </li>
             <li v-if="isLoggedIn()">
-              <a type="button" class="btn btn-success mb5" href="/habits/new">New Habit</a>
+              <a type="button" class="btn btn-success mb5" href="/habits/new">NEW HABIT</a>
             </li>
             <li class="nav-item" v-if="!isLoggedIn()">
               <a
@@ -188,15 +188,13 @@
 }
 body {
   background-color: rgb(247, 247, 247);
-  height: 110vmax;
+  height: 100vmax;
   margin-top: 5vh;
-}
-router-view {
-  margin-top: 200px;
 }
 
 nav .btn {
   margin-right: 1vw;
+  font-size: 0.9em;
 }
 </style>
 <script>

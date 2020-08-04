@@ -1,28 +1,35 @@
 <template>
   <div class="signup">
-    <h1>Account Signup</h1>
-    <p class="text-danger" v-for="error in errors">{{ error }}</p>
-    <p>{{ message }}</p>
-    <form v-on:submit.prevent='submit()'>
-      <ul>
-      <li><label>First Name:</label>
-      <input type="text" v-model="first_name" required></li>
-      <li><label>Last Name:</label>
-      <input type="text" v-model="last_name" required></li>
-      <li><label>Email:</label>
-      <input type="email" v-model="email" required></li>
-      <li><label>Password:</label>
-      <input type="password" v-model="password" required></li>
-      <li><label>Password Confirmation:</label>
-      <input type="password" v-model="passwordConfirmation" required></li>
-      <li><input type ="submit" value="Submit"></li>
-      </ul>
-    </form>
+    <div class="container">
+      <h1>Account Signup</h1>
+      <p class="text-danger" v-for="error in errors">{{ error }}</p>
+      <p>{{ message }}</p>
+      <div class = "form-group">
+        <form v-on:submit.prevent='submit()'>
+   
+          <label>First Name:</label>
+          <input type="text" class="form-control" v-model="first_name" required>
+          <label>Last Name:</label>
+          <input type="text" class="form-control" v-model="last_name" required>
+          <label>Email:</label>
+          <input type="email" class="form-control" v-model="email" required>
+          <label>Password:</label>
+          <input type="password" class="form-control" v-model="password" required>
+          <label>Password Confirmation:</label>
+          <input type="password" class="form-control" v-model="passwordConfirmation" required></li>
+          <input type="submit" class="btn btn-primary" value="Submit">
 
+        </form>
+      </div>
+
+    </div>
   </div>
 </template>
 
 <style>
+.signup h1 {
+  color: "slategray";
+}
 </style>
 
 <script>
