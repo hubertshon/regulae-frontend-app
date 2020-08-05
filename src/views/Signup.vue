@@ -4,7 +4,7 @@
       <h1>Account Signup</h1>
       <p class="text-danger" v-for="error in errors">{{ error }}</p>
       <p>{{ message }}</p>
-      <div class = "form-group">
+      <div class="form-group">
         <form v-on:submit.prevent='submit()'>
    
           <label>First Name:</label>
@@ -27,7 +27,7 @@
 </template>
 
 <style>
-.signup h1 {
+.signup .container h1 {
   color: "slategray";
 }
 </style>

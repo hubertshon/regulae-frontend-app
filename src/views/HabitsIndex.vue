@@ -1,13 +1,14 @@
 <template>
   <div class="habits-index">
-    <p>Habits Map</p>
+    <div class="container">
+    <h1>Habits Map</h1>
 
     <div id="my_dataviz"></div>
+    </div>
   </div>
 </template>
 
 <style></style>
-
 
 <script>
 import axios from "axios";
@@ -88,8 +89,8 @@ export default {
         .padding(0.05);
       svg
         .append("g")
-        .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x))
+        .attr("transform", "translate(0," + 0 + ")")
+        .call(d3.axisTop(x))
         .attr("stroke-opacity", 0.25)
         .style("font-size", "11");
 
@@ -177,4 +178,3 @@ export default {
   computed: {},
 };
 </script>
-
