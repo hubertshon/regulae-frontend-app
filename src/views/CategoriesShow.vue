@@ -2,219 +2,233 @@
   <div class="category-show">
     <div class="container">
       <!--Category Info-->
-      <h2>{{ category.name }}</h2>
-      <h5>{{ category.statement }}</h5>
-      <inline-svg :src="category.image_url" class="icon" />
-      <p>{{ noHabitMessage }}</p>
-      <!-- Habit Info -->
-      <div class="container">
-        <div v-show="currentHabit.id > 0" class="current-habit">
-          <!-- Progress Bar  -->
-          <div class="bar-container">
-            <div
-              class="bar"
-              :style="{ width: currentHabit.habit_progress * 100 + '%' }"
-            />
-          </div>
-
-          <!-- Habit Details -->
-          <h5 v-show="currentHabit.habit_progress === 1">
-            {{ completeMessage }}
-          </h5>
-          <h5>{{ currentHabit.name }}</h5>
-          <h6>Progress: {{ getHabitProgress(currentHabit.habit_progress) }}%</h6>
-          <p v-if="currentHabit.notes">Notes: {{ currentHabit.notes }}</p>
-          <p>
-            Frequency: {{ currentHabit.frequency }} time(s) /
-            {{ habitTranslate(currentHabit.factor) }}
-          </p>
-
-          <p>
-            Total: {{ currentHabit.completes.length }} / {{ currentHabit.total }}
-          </p>
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-toggle="modal"
-            data-target="#habitModal"
-          >
-            Edit Habit
-          </button>
-          <button
-            type="button"
-            class="btn btn-outline-secondary btn"
-            v-on:click="removeComplete()"
-          >
-            -
-          </button>
-          <button
-            type="button"
-            class="btn btn-success btn"
-            v-on:click="addComplete()"
-          >
-            +
-          </button>
+      <div class="row">
+        <div class="mb40">
+        <inline-svg :src="category.image_url" class="icon" />
         </div>
-
-        <!--Habit Index-->
-        <div
-          v-for="(habit, habitIndex) in category.habits"
-          class="category-habits"
-        >
-          <button
-            type="button"
-            class="btn btn-link  btn-lg"
-            v-on:click="setCurrentHabit(habitIndex)"
-          >
-            {{ habit.name }}
-          </button>
+        <div class="col-lg">
+        <h2 class="display-4">{{ category.name }}</h2>
+        <blockquote class="blockquote">{{ category.statement }}</blockquote>
         </div>
       </div>
+      <p>{{ noHabitMessage }}</p>
+      <div class="row">
+        <div class="mb40" id="habit-selector">
+          <div v-for="(habit, habitIndex) in category.habits"
+            class="category-habits">
+            <button
+              type="button"
+              class="btn btn-link  btn-lg"
+              v-on:click="setCurrentHabit(habitIndex)">
+              {{ habit.name }}
+            </button>
+          </div>
+        </div>
 
-      <!--Edit Habit Modal -->
-      <div
-        class="modal fade"
-        id="habitModal"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="habitModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="habitModalLabel">
-                {{ currentHabit.name }}
+        <div class="col-lg">
+          
+          <!-- Habit Info -->
+          <div class="habit-container">
+            <div v-show="currentHabit.id > 0" class="current-habit">
+              <!-- Progress Bar  -->
+
+              <!-- Habit Details -->
+              <h5 v-show="currentHabit.habit_progress === 1">
+                {{ completeMessage }}
               </h5>
+              <h3>{{ currentHabit.name }}</h3>
+              <h4>Progress: {{ getHabitProgress(currentHabit.habit_progress) }}%</h4>
+
+              <div class="bar-container">
+                <div
+                  class="bar"
+                  :style="{ width: currentHabit.habit_progress * 100 + '%' }"
+                />
+              </div>
+              </div>
+              
+              <p>
+                Frequency: {{ currentHabit.frequency }} time(s) /
+                {{ habitTranslate(currentHabit.factor) }}
+              </p>
+              <p>
+                Completes: {{ currentHabit.completes.length }} / {{ currentHabit.total }}
+              </p>
+              <p>Date Started: {{ currentHabit.created_at }}</p> 
+              <p v-if="currentHabit.notes">Notes: {{ currentHabit.notes }}</p>
               <button
                 type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
+                class="btn btn-secondary"
+                data-toggle="modal"
+                data-target="#habitModal"
               >
-                <span aria-hidden="true">&times;</span>
+                Edit Habit
               </button>
-            </div>
+              <button
+                type="button"
+                class="btn btn-outline-secondary btn"
+                v-on:click="removeComplete()"
+              >
+                -
+              </button>
+              <button
+                type="button"
+                class="btn btn-success btn"
+                v-on:click="addComplete()"
+              >
+                +
+              </button>
+            
+          </div>
+          <!--Habit Index-->
 
-            <form v-on:submit.prevent="editCurrentHabit()" class="edit-habit">
-              <div class="modal-body">
-                Name:<input
-                  type="text"
-                  class="form-control"
-                  v-model="currentHabit.name"
-                  required
-                />
-                Notes:<input
-                  type="text"
-                  class="form-control"
-                  v-model="currentHabit.notes"
-                  required
-                />
-                Frequency:<input
-                  type="number"
-                  class="form-control"
-                  v-model="currentHabit.frequency"
-                  required
-                />
-                <label for="factorSelect">Factor:</label>
-                <select
-                  class="form-control"
-                  id="factorSelect"
-                  v-model="currentHabit.factor"
-                  required
+        </div>
+
+        <!--Edit Habit Modal -->
+        <div
+          class="modal fade"
+          id="habitModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="habitModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="habitModalLabel">
+                  {{ currentHabit.name }}
+                </h5>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
                 >
-                  <option v-bind:value="28">per Day</option>
-                  <option v-bind:value="4">per Week</option>
-                  <option v-bind:value="1">per Month</option>
-                </select>
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
 
-                <!--Duration or Complete By: Date -->
-                <div class="form-group">
-                  <div class="form-check-inline">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="inlineRadioOptions"
-                      id="inlineRadio1"
-                      value="1"
-                      v-model="durationOrDate"
-                    />
-                    <label class="form-check-label" for="inlineRadio1"
-                      >Number of Months</label
-                    >
-                  </div>
-                  <div class="form-check-inline">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="inlineRadioOptions"
-                      id="inlineRadio2"
-                      value="2"
-                      v-model="durationOrDate"
-                    />
-                    <label class="form-check-label" for="inlineRadio2"
-                      >Complete By Date</label
-                    >
-                  </div>
-                  <div class="form-group">
-                    Duration:<input
-                      type="text"
-                      v-model="currentHabit.duration"
-                      :disabled="durationOrDate == 2"
-                    />
-                    Complete By:<input
-                      type="date"
-                      v-model="currentHabit.complete_by"
-                      :disabled="durationOrDate == 1"
-                    />
-                  </div>
-                </div>
-
-                <!-- Category Select -->
-                <div class="form-group">
-                  <label for="categorySelect">Category:</label>
+              <form v-on:submit.prevent="editCurrentHabit()" class="edit-habit">
+                <div class="modal-body">
+                  Name:<input
+                    type="text"
+                    class="form-control"
+                    v-model="currentHabit.name"
+                    required
+                  />
+                  Notes:<input
+                    type="text"
+                    class="form-control"
+                    v-model="currentHabit.notes"
+                    required
+                  />
+                  Frequency:<input
+                    type="number"
+                    class="form-control"
+                    v-model="currentHabit.frequency"
+                    required
+                  />
+                  <label for="factorSelect">Factor:</label>
                   <select
                     class="form-control"
-                    id="categorySelect"
-                    v-model="currentHabit.category_id"
+                    id="factorSelect"
+                    v-model="currentHabit.factor"
                     required
                   >
-                    <option
-                      v-for="category in categories"
-                      v-bind:value="category.id"
-                      >{{ category.name }}</option
-                    >
+                    <option v-bind:value="28">per Day</option>
+                    <option v-bind:value="4">per Week</option>
+                    <option v-bind:value="1">per Month</option>
                   </select>
+
+                  <!--Duration or Complete By: Date -->
+                  <div class="form-group">
+                    <div class="form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="inlineRadioOptions"
+                        id="inlineRadio1"
+                        value="1"
+                        v-model="durationOrDate"
+                      />
+                      <label class="form-check-label" for="inlineRadio1"
+                        >Number of Months</label
+                      >
+                    </div>
+                    <div class="form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="inlineRadioOptions"
+                        id="inlineRadio2"
+                        value="2"
+                        v-model="durationOrDate"
+                      />
+                      <label class="form-check-label" for="inlineRadio2"
+                        >Complete By Date</label
+                      >
+                    </div>
+                    <div class="form-group">
+                      Duration:<input
+                        type="text"
+                        v-model="currentHabit.duration"
+                        :disabled="durationOrDate == 2"
+                      />
+                      Complete By:<input
+                        type="date"
+                        v-model="currentHabit.complete_by"
+                        :disabled="durationOrDate == 1"
+                      />
+                    </div>
+                  </div>
+
+                  <!-- Category Select -->
+                  <div class="form-group">
+                    <label for="categorySelect">Category:</label>
+                    <select
+                      class="form-control"
+                      id="categorySelect"
+                      v-model="currentHabit.category_id"
+                      required
+                    >
+                      <option
+                        v-for="category in categories"
+                        v-bind:value="category.id"
+                        >{{ category.name }}</option
+                      >
+                    </select>
+                  </div>
+                  <p v-for="error in errors">{{ error }}</p>
                 </div>
-                <p v-for="error in errors">{{ error }}</p>
-              </div>
 
-              <!-- Buttons -->
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  style="color:red"
-                  class="btn btn-link"
-                  v-on:click="deleteCurrentHabit()"
-                  data-dismiss="modal"
-                >
-                  Delete Habit
-                </button>
-                <input
-                  type="submit"
-                  class="btn btn-success"
-                  value="Save Changes"
-                />
+                <!-- Buttons -->
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    style="color:red"
+                    class="btn btn-link"
+                    v-on:click="deleteCurrentHabit()"
+                    data-dismiss="modal"
+                  >
+                    Delete Habit
+                  </button>
+                  <input
+                    type="submit"
+                    class="btn btn-success"
+                    value="Save Changes"
+                  />
 
-                <button
-                  type="button"
-                  class="btn btn-primary"
-                  data-dismiss="modal"
-                >
-                  Close
-                </button>
-              </div>
-            </form>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
@@ -223,23 +237,20 @@
 </template>
 
 <style>
-.habit-title {
+/* .habit-title {
   font-weight: bold;
-}
+} */
 
-.container {
-  margin-top: 10%;
+/* .category-show .container {
+} */
+.category-show .container {
+  margin-left: 17vmax;
 }
-
-.category-habits {
-  margin-top: 5%;
-}
-
-.bar-container {
+.category-show .habit-container .bar-container {
   text-align: center;
   width: 250px;
   height: 5px;
-  margin: 40px;
+  margin: 40px 0 0 0;
   background-color: lightgray;
 }
 
@@ -249,10 +260,19 @@
   width: 0%;
 }
 
+.category-show .habit-container {
+  margin: 40px;
+}
+
 .icon {
-  fill: rgb(172, 172, 172);
-  width: 3em;
-  height: 3em;
+  fill: rgb(89, 89, 89);
+  width: 10vw;
+  height: 10vh;
+}
+
+#habit-selector .btn {
+  margin-left: 0;
+  padding-left: 0;
 }
 </style>
 

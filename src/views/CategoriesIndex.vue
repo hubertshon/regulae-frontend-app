@@ -8,16 +8,17 @@
 
       <div class="row special-feature">
         <div class="col-lg-4 margin20 wow animated zoomIn" data-wow-duration=".5s" data-wow-delay=".2s" v-for="(category, categoryIndex) in categories">
-          <div class="s-feature-box text-center" :href="`/categories/${category.id}`" :style="{ backgroundColor: category.color }">
+          <div  class="s-feature-box text-center"  :style="{ backgroundColor: category.color }">
+            <a :href="`/categories/${category.id}`">
             <div class="mask-top">
               <!-- Icon -->
                 <progress-ring
                   :progress="getCategoryProgress(category)"
                 ></progress-ring>
-                <h4>{{ getCategoryProgress(category) }}%</h4>
+                <h3>{{ getCategoryProgress(category) }}%</h3>
 
               <!-- Title -->
-              <h1 :href="`/categories/${category.id}`">
+              <h1 class="category-name">
                   {{ category.name }}</h1>
             </div>
             <!--HOVER EFFECT-->
@@ -34,17 +35,15 @@
                   </div>
                 </div>
             </div>
-            <!-- <button
+            <!-- <i class="icon-edit"
                   type="button"
-                  :style="{ minWidth: 100 }"
-                  class="btn btn-outline-light btn-sm"
                   data-toggle="modal"
                   data-target="#categoryModal"
-                  id="edit-category-button"
                   v-on:click="setCurrentCategory(categoryIndex)"
                 >
               Edit Category
-            </button> -->
+            </i> -->
+            </a>
           </div>
         </div>
       </div>
@@ -150,8 +149,21 @@
   box-shadow: 0px 20px 30px 0 rgba(0, 101, 20, 0.16),
     0 5px 5px 0 rgba(0, 0, 0, 0.15);
   text-align: center;
-  height: 80vh;
+  height: 560px;
   border-radius: 20px;
+}
+
+.special-feature .s-feature-box::after {
+  margin: 1em;
+  box-shadow: 0px 30px 40px 0 rgba(0, 101, 20, 0.16),
+    0 15px 15px 0 rgba(0, 0, 0, 0.15);
+  text-align: center;
+  height: 560px;
+  border-radius: 20px;
+}
+.special-feature .s-feature-box:hover::after {
+  box-shadow: 0px 30px 40px 0 rgba(0, 101, 20, 0.16),
+    0 15px 15px 0 rgba(0, 0, 0, 0.15);
 }
 
 .s-feature-box h1 {
@@ -166,27 +178,6 @@
   font-size: 1em;
 }
 
-.categories .card {
-  margin: 1em;
-  box-shadow: 0px 20px 30px 0 rgba(0, 101, 20, 0.16),
-    0 5px 5px 0 rgba(0, 0, 0, 0.15);
-  text-align: center;
-  height: 80vh;
-  border-radius: 20px;
-}
-
-.card h1 {
-  padding-bottom: 0.5em;
-}
-
-.card p {
-  text-align: left;
-  margin-left: 0;
-  margin-bottom: 5px;
-  padding-top: 1em 0 0 0;
-  font-size: 1em;
-  line-height: 2em;
-}
 .special-feature .s-feature-box p {
   text-align: left;
   margin-left: 0;
@@ -198,20 +189,13 @@
 .special-feature .s-feature-box p,
 .special-feature .s-feature-box h4,
 .special-feature .s-feature-box a,
-.special-feature .s-feature-box h1 {
+.special-feature .s-feature-box h1,
+.special-feature .s-feature-box h3 {
   color: white;
 }
 
-.card p,
-.card h4,
-.card a,
-.card h1 {
-  color: white;
-}
-
-.category-title {
+.category-name {
   font-weight: bold;
-  font-size: 1.5em;
   margin: 10px;
   padding: 1.5em, 0, 1.5em, 0;
   word-wrap: normal;
@@ -221,6 +205,7 @@
   fill: rgb(255, 255, 255);
   width: 10vh;
   height: 10vh;
+  margin: 5vm;
 }
 
 .ctg-bar-container {

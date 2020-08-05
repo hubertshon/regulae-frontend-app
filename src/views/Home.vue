@@ -1,20 +1,12 @@
 <template>
   <div class="home">
     <div class="container">
+
       <h2>Upcoming Habits</h2>
       <div class="upcoming-habits" v-for="habit in upcomingHabits">
         <li>{{ habit }}</li>
       </div>
-      <div class="s-feature-box text-center wow animated" data-wow-duration=".5s" data-wow-delay=".2s">
-        <div class="mask-top">
-          <i class=fa >Some Cool</i>
-        </div>
-        <div class="mask-bottom">
-          <p>Real Cool thing</p>
-        </div>
-      </div>
-      
-      
+
 
     </div>
   </div>

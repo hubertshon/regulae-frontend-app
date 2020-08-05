@@ -1,7 +1,8 @@
 <template>
   <div id="app">
+    
     <nav
-      class="navbar navbar-expand-lg navbar-light navbar-transparent bg-white fixed-top"
+      class="navbar navbar-expand-lg navbar-light navbar-transparent fixed-top"
     >
       <a class="navbar-brand font700" href="/">REGULAE</a>
       <button
@@ -188,10 +189,13 @@
 * {
   font-family: "Raleway", sans-serif;
 }
+.container {
+  margin-top: 10%;
+}
+
 body {
   background-color: rgb(247, 247, 247);
   height: 100vmax;
-  margin-top: 1vh;
 }
 
 nav .btn {
@@ -207,12 +211,12 @@ export default {
   components: {
     InlineSvg,
   },
-  data: function() {
+  data: function () {
     return {
       user_info: {},
     };
   },
-  created: function() {
+  created: function () {
     axios
       .get(`/api/users/${localStorage.getItem("user_id")}`)
       .then((response) => {
@@ -221,17 +225,17 @@ export default {
       });
   },
   methods: {
-    isLoggedIn: function() {
+    isLoggedIn: function () {
       return localStorage.getItem("jwt");
     },
-    getUserId: function() {
+    getUserId: function () {
       return localStorage.getItem("user_id");
     },
-    deleteUser: function() {
+    deleteUser: function () {
       axios.delete(`/api/users/${localStorage.getItem("user_id")}`);
       this.$router.push("/delete_confirm");
     },
-    editUser: function() {
+    editUser: function () {
       var params = {
         first_name: this.user_info.first_name,
         last_name: this.user_info.last_name,
