@@ -20,7 +20,8 @@
                   <progress-ring
                     :progress="getCategoryProgress(category)"
                   >
-                    <h4>{{ getCategoryProgress(category) }}%</h4></progress-ring>
+                    </progress-ring>
+                    <h4>{{ getCategoryProgress(category) }}%</h4>
                   
 
                 <!-- Title -->
@@ -30,7 +31,7 @@
               <!--HOVER EFFECT-->
               <div class="mask-bottom">
                 <inline-svg :src="category.image_url" class="category-icon" />
-                <h2 style="color: white;">{{category.statement}}</h2>
+                <h2 class="statement" style="color: white;">{{category.statement}}</h2>
                 <div class="category-habits-idx" v-for="habit in category.habits">
                 <p>{{ habit.name }}</p>
                     <div class="ctg-bar-container">
@@ -101,17 +102,19 @@
                 <div class="form-group">
                   <label for="colorSelect">Color:</label>
                   <select class="form-control" id="colors" v-model="currentCategory.color">
-                    <option value="#38A3D3">"Blue"</option>
-                    <option value="#DE6F4C">"Red"</option>
-                    <option value="#65B96E">"Green"</option>
-                    <option value="#F1CD56">"Yellow"</option>
-                    <option value="#B965A7">"Orange"</option>
-                    <option value="#484948">Charcoal"</option>
+                    <option value="#54A3C8">"Maximum Blue"</option>
+                    <option value="#DE6F4C">"Burnt Sienna (Red)"</option>
+                    <option value="#65B96E">"Bud Green"</option>
+                    <option value="#F3D268">"Orange Yellow Crayola"</option>
+                    <option value="#B16AB2">"Pearly Purple"</option>
+                    <option value="#626262">Dim Gray"</option>
                   </select>
                 </div>
+                <p>{{message}}</p>
               </div>
 
               <div class="modal-footer">
+
                 <button
                   type="button"
                   style="color:red"
@@ -121,18 +124,20 @@
                 >
                   Delete Category
                 </button>
-                <input
-                  type="submit"
-                  class="btn btn-secondary"
-                  value="Save Changes"
-                />
+
                 <button
                   type="button"
-                  class="btn btn-primary"
+                  class="btn btn-secondary"
                   data-dismiss="modal"
                 >
                   Close
                 </button>
+
+                <input
+                  type="submit"
+                  class="btn btn-success"
+                  value="Save Changes"
+                />
               </div>
             </form>
           </div>
@@ -140,7 +145,7 @@
       </div>
 
       <!--catgCongratsModal-->
-      <div class="modal fade" id="catgCongratsModal" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
+      <!-- <div class="modal fade" id="catgCongratsModal" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -154,7 +159,7 @@
           </div>
         </div>
       </div>
-      </div>
+      </div> -->
     </div>
   </div>
   </div>
@@ -213,6 +218,10 @@
   color: white;
 }
 
+.s-feature-box h4 {
+  font-size: 1.3em;
+}
+
 .s-feature-box .icon-Pen-5 {
   color: white;
   line-height: 10px;
@@ -238,11 +247,15 @@
   word-wrap: normal;
 }
 
+.statement {
+  margin-top: 1.5em;
+}
+
 .category-icon {
   fill: rgb(255, 255, 255);
   width: 10vh;
   height: 10vh;
-  margin: 5vm;
+  margin: 5vm 5vm 5vm 8vm;
 }
 
 .ctg-bar-container {
@@ -293,6 +306,7 @@ export default {
       errors: [],
       categoryProgress: "",
       catgCongrats: "",
+      message: "",
     };
   },
   created: function () {
@@ -323,7 +337,7 @@ export default {
         .patch(`/api/categories/${this.currentCategory.id}`, formData)
         .then((response) => {
           console.log("Category Edited", response.data);
-          $(this.categoryModal).modal("hide");
+          this.message = "Changes Saved!";
         })
         .catch((error) => {
           this.errors = error.response.data.errors;

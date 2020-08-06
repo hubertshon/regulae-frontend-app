@@ -22,17 +22,14 @@
           <li class="nav-item">
             <a class="nav-link active" href="/">Welcome</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/tutorial">Tutorial </a>
-          </li>
           <li class="nav-item" v-if="isLoggedIn()">
-            <a class="nav-link" href="/habits">Habits Chart</a>
+            <a class="nav-link" href="/habits">Habits Map</a>
           </li>
           <li class="nav-item" v-if="isLoggedIn()">
             <a class="nav-link" href="/categories">Categories</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/logout">Log Out</a>
+            <a class="nav-link" href="/logout" v-if="isLoggedIn()">Log Out</a>
           </li>
           <li class="nav-item" v-if="isLoggedIn()">
             <a
@@ -47,6 +44,11 @@
               >NEW HABIT</a
             >
           </li>
+          <li class="nav-item" v-if="isLoggedIn()">
+            <a type="button" class="btn btn-secondary btn-sml" data-toggle="modal"
+                data-target="#exampleModal">ACCOUNT INFO</a
+            >
+          </li>
           <li class="nav-item" v-if="!isLoggedIn()">
             <a
               type="button"
@@ -57,12 +59,18 @@
           </li>
           <li class="nav-item" v-if="!isLoggedIn()">
             <a href="/signup" class="btn btn-success btn-sml text-white"
-              >Sign Up</a
+              >SIGN UP</a
             >
           </li>
         </ul>
       </div>
     </nav>
+
+
+
+
+
+
 
     <!-- Modal -->
     <div
@@ -72,7 +80,7 @@
       role="dialog"
       aria-labelledby="User Info"
       aria-hidden="true"
-    >
+      >
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -109,6 +117,7 @@
                 v-model="user_info.email"
                 required
               />
+              <p>{{ message }}</p>
             </div>
             <div class="modal-footer">
               <button
@@ -141,7 +150,7 @@
     <router-view />
 
     <!--Footer-->
-    <div class="bg-dark">
+    <div class="bg-">
       <footer class="container text-left py-5">
         <div class="row">
           <div class="col-12 col-md">
@@ -194,18 +203,23 @@
   margin-top: 10%;
 }
 
-body {
-  background-color: rgb(247, 247, 247);
+.nav-link body {
+  background-color: #eef0f2 !important;
+  height: 50vmax;
 }
 
 .btn-success {
-  fill: rgb(102, 242, 130);
+  background-color: rgb(95, 208, 117);
   border-radius: 7px;
 }
 
 nav .btn {
   margin-right: 1vw;
   font-size: 0.9em;
+}
+
+.nav-link a {
+  color: #2b3a67;
 }
 </style>
 <script>
@@ -219,6 +233,7 @@ export default {
   data: function () {
     return {
       user_info: {},
+      message: "",
     };
   },
   created: function () {
@@ -250,6 +265,7 @@ export default {
         .patch(`/api/users/${localStorage.getItem("user_id")}`, params)
         .then((response) => {
           console.log(response.data);
+          this.message = "Changed Saved!";
         });
     },
   },

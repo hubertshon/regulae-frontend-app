@@ -3,7 +3,7 @@
 
       <h3>UPCOMING</h3>
       <div class="uphabits" v-for="habit in upcomingHabits">
-        <a :href="`/categories/${habit.category_id}`" v-on:click="this.currentHabit=habit">{{ habit.name }}</a>
+        <a :href="`/categories/${habit.category_id}`" v-on:click="this.upcomingHabit=habit">{{ habit.name }}</a>
       </div>
 
 
@@ -11,6 +11,9 @@
 </template>
 
 <style>
+.uphabits {
+  content: .attr("habit");
+}
 .uphabits h3 {
   font-weight: 500;
 }
@@ -20,6 +23,11 @@
   font-weight: 700;
   font-size: 0.8;
   line-height: 3.2em;
+  color: #9999a1;
+}
+
+.uphabits a:hover {
+  color: rgb(57, 189, 77);
 }
 </style>
 
@@ -30,6 +38,7 @@ export default {
   name: "upcoming-habits",
   props: {
     currentHabit: {},
+    upcomingHabit: {},
   },
   data: function () {
     return {

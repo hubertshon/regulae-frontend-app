@@ -27,8 +27,8 @@ export default {
       console.log(response.data);
 
       var margin = { top: 70, right: 30, bottom: 30, left: 170 },
-        width = 800 - margin.left - margin.right,
-        height = 900 - margin.top - margin.bottom;
+        width = 1000 - margin.left - margin.right,
+        height = 750 - margin.top - margin.bottom;
 
       // append the svg object to the body of the page
       var svg = d3
@@ -75,7 +75,9 @@ export default {
             factor: habit.factor,
             category_id: habit.category_id,
             color: habit.color,
-            interval: Math.ceil(habit.factor / habit.frequency),
+            interval: Math.ceil(
+              (1 / habit.factor) * (1 / habit.frequency) * 28
+            ),
           };
           finalData.push(newObject);
         });

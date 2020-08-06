@@ -11,12 +11,12 @@
         <label for="colorSelect">Color:</label>
         <select class="form-control" id="colors" v-model="newCategoryColor">
           <p class="text-muted">Required</p>
-          <option value="#38A3D3">Blue</option>
-          <option value="#DE6F4C">Red</option>
-          <option value="#65B96E">Gray</option>
-          <option value="#F1CD56">Green</option>
-          <option value="#B965A7">Orange</option>
-          <option value="#484948">Magenta</option>
+            <option value="#54A3C8">"Maximum Blue"</option>
+            <option value="#DE6F4C">"Burnt Sienna (Red)"</option>
+            <option value="#65B96E">"Bud Green"</option>
+            <option value="#F3D268">"Orange Yellow Crayola"</option>
+            <option value="#B16AB2">"Pearly Purple"</option>
+            <option value="#626262">Dim Gray"</option>
         </select>
       </div>
       
