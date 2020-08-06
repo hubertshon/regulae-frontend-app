@@ -2,12 +2,9 @@
   <div class="category-show">
     <div class="container">
       <!--Category Info-->
-      <div class="row">
-        <div class="mb40">
-        <!-- <inline-svg :src="category.image_url" class="icon" />-->
-        </div> 
+      <div class="row"> 
         <div class="col-lg" id="category-heading">
-        <h2 class="display-3">{{ category.name }}</h2>
+        <h2 class="display-2">{{ category.name }}</h2>
         <blockquote class="blockquote">{{ category.statement }}</blockquote>
         </div>
       </div>
@@ -15,35 +12,46 @@
 
 
       <div class="row">
-        <div class="col-sm-3" id="habit-selector">
-          <div v-for="(habit, habitIndex) in category.habits"
-            class="category-habits">
-            <button
-              type="button"
-              class="btn btn-link  btn-lg"
-              v-on:click="setCurrentHabit(habitIndex)">
-              {{ habit.name }}
-            </button>
-          </div>
-        </div>
-
-        <div class="col-md-6">
-          
-          <!-- Habit Info "icon-Arrow-UpinCircle"-->
+        <div class="col-lg-7" id="habit-selector">
+             <!-- Habit Details -->
           <div class="habit-container">
 
-            
             <div v-show="currentHabit.id > 0" class="current-habit">
-              <!-- Progress Bar  -->
 
-              <!-- Habit Details -->
+             
               
+
+
+              <h1>{{ currentHabit.name }}</h1> 
+              <h4>Progress: {{ getHabitProgress(currentHabit.habit_progress) }}%</h4>
               <h5 v-show="currentHabit.habit_progress === 1">
                 {{ completeMessage }}
               </h5>
-              <h2>{{ currentHabit.name }}</h2> 
-              <h4>Progress: {{ getHabitProgress(currentHabit.habit_progress) }}%</h4>
-
+                <div class="button-container">
+                  <button
+                    class="icon-Arrow-DowninCircle"
+                    type="button"
+                    id="remove-complete"
+                    v-on:click="removeComplete()"
+                  >
+                  </button>
+                  <button
+                    type="button"
+                    class="icon-Bulleted-List"
+                    id="edit-habit"
+                    data-toggle="modal"
+                    data-target="#habitModal"
+                  >
+                  </button>
+                  
+                  <button
+                    class="icon-Add"
+                    type="button"
+                    id="add-complete"
+                    v-on:click="addComplete()"
+                  >
+                  </button>
+                </div>
 
               <div class="bar-container">
                 <div
@@ -62,44 +70,29 @@
               </p>
               <p>Date Started: {{ currentHabit.created_at }}</p> 
               <p v-if="currentHabit.notes">Notes: {{ currentHabit.notes }}</p>
-
-              <div class="button-container">
-                <button
-                  class="icon-Arrow-DowninCircle"
-                  type="button"
-                  id="remove-complete"
-                  v-on:click="removeComplete()"
-                >
-                </button>
-                <button
-                  type="button"
-                  class="icon-Bulleted-List"
-                  id="edit-habit"
-                  data-toggle="modal"
-                  data-target="#habitModal"
-                >
-                </button>
-                
-                <button
-                  class="icon-Add"
-                  type="button"
-                  id="add-complete"
-                  v-on:click="addComplete()"
-                >
-                </button>
-              </div>
-            
-          </div>
-          <!--Habit Index-->
-          
-        </div>
-
-       <div class="col-md-3">
-          <upcoming-habits :currentHabit="this.currentHabit"></upcoming-habits>
           </div>
         </div>
+
+
+          <div class="col-md-3">
+
+          <h3>HABITS</h3>
+            <div v-for="(habit, habitIndex) in category.habits"
+            class="category-habits">
+            <p
+              v-on:click="setCurrentHabit(habitIndex)">
+              {{ habit.name }}
+            </p>
+          </div>
+            <upcoming-habits :currentHabit="this.currentHabit"></upcoming-habits>
+            </div>
+          </div>
           <!--Edit Habit Modal -->
-         <div
+
+
+        </div>
+
+        <div
           class="modal fade"
           id="habitModal"
           tabindex="-1"
@@ -245,11 +238,6 @@
             </div>
           </div>
         
-
-
-
-
-      </div>
               <!--Congrats Modal-->
         <div class="modal fade" tabindex="-1" role="dialog" id="habitCongratsModal" aria-labelledby="habitCongratsModalLabel" aria-hidden="true">
           <div class="modal-dialog"> 
@@ -278,16 +266,37 @@
 .category-show .container {
   margin: 15vh auto;
 }
+
+.category-show .col-lg {
+  margin-left: 0;
+  padding-left: 0;
+}
 .category-show .bar-container {
   text-align: center;
-  width: 250px;
+  width: 370px;
   height: 5px;
   margin: 40px 0 0 0;
-  background-color: lightgray;
+  background-color: rgb(233, 233, 233);
+}
+
+.category-show .display-2 {
+  font-weight: 700;
+  color: gray;
+}
+.category-show blockquote {
+  font-size: 2em;
+}
+.category-show h1 {
+  font-weight: 400;
+}
+.category-show p {
+  font-size: 1em;
+  text-transform: uppercase;
+  font-weight: 500;
 }
 
 .bar {
-  background-color: rgb(36, 177, 57);
+  background-color: rgb(57, 189, 77);
   height: 100%;
   width: 0%;
 }
@@ -308,15 +317,32 @@
   margin: 0 auto 0 auto;
 } */
 
-#habit-selector,
-#habit-selector .category-habits {
+#habit-selector {
   margin-left: 0;
   padding-left: 0;
 }
 
-#habit-selector .btn {
+#habit-selector {
+  font-weight: 400;
+}
+
+.category-habits {
   margin-left: 0;
   padding-left: 0;
+  cursor: pointer;
+}
+
+.category-habits p {
+  margin-left: 0;
+  padding-left: 0;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 1em;
+  line-height: 2.8em;
+}
+
+.category-habits p:hover {
+  color: rgb(57, 189, 77);
 }
 
 .habit-container button {
@@ -326,7 +352,7 @@
   line-height: 20px;
   padding: 30px;
   border: none;
-  font-size: 2rem;
+  font-size: 3rem;
   color: darkslategray;
   z-index: 1;
   cursor: pointer;
@@ -337,20 +363,19 @@
   margin-top: 40px;
 }
 
-.habit-container #add-complete {
-  font-size: 4rem;
+.habit-container #add-complete:hover {
+  color: rgb(40, 208, 65);
 }
 
 .habit-container button:hover {
-  color: green;
+  color: rgb(115, 141, 208);
   translate: 10px;
   transform: scale(1.5, 1.5);
-  /* box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.25); */
   transition: 0.4s;
 }
 
 .habit-container .icon-Arrow-Down:hover {
-  color: red;
+  color: rgb(222, 118, 118);
   translate: 10px;
   transform: scale(1.5, 1.5);
 }

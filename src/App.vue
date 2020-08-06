@@ -187,7 +187,7 @@
 
 <style>
 * {
-  font-family: "Raleway", sans-serif;
+  font-family: "Open Sans", "sans serif";
   /* font-family: "icomoon"; */
 }
 .container {
@@ -196,11 +196,11 @@
 
 body {
   background-color: rgb(247, 247, 247);
-  height: 100vmax;
 }
 
 .btn-success {
-  background-color: rgb(41, 136, 60);
+  fill: rgb(102, 242, 130);
+  border-radius: 7px;
 }
 
 nav .btn {

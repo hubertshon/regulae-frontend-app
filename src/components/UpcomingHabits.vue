@@ -1,9 +1,9 @@
 <template>
   <div class="uphabits">
 
-      <h2>Upcoming Habits</h2>
+      <h3>UPCOMING</h3>
       <div class="uphabits" v-for="habit in upcomingHabits">
-        <a :href="`/categories/${habit.category_id}`" v-on:click="this.currentHabit=habit"><li>{{ habit.name }}</li></a>
+        <a :href="`/categories/${habit.category_id}`" v-on:click="this.currentHabit=habit">{{ habit.name }}</a>
       </div>
 
 
@@ -11,6 +11,16 @@
 </template>
 
 <style>
+.uphabits h3 {
+  font-weight: 500;
+}
+
+.uphabits a {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.8;
+  line-height: 3.2em;
+}
 </style>
 
 <script>
