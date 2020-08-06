@@ -2,19 +2,21 @@
   <div class="category-new">
     <h2 class="display-4">New Category</h2>
     <form v-on:submit.prevent="createCategory()" class="new-category">
-      *Name:<input class="form-control" type="text" v-model="newCategoryName" required>
-      Statement:<input type="text" class="form-control"  v-model="newCategoryStatement">
-      Image URL:<input type="file" class="form-control"  v-on:change="setFile($event)" ref="fileInput">
+      <label>Name:</label><input class="form-control" type="text" v-model="newCategoryName" required><p class="text-muted">Required</p>
+      <label>Statement:</label><input type="text" class="form-control"  v-model="newCategoryStatement">
+      <label>Image:</label><input type="file" id="file-input" class="form-control"  v-on:change="setFile($event)" ref="fileInput">
+
 
       <div class="form-group">
         <label for="colorSelect">Color:</label>
-        <select class="form-control" id="colors">
-          <option>Blue</option>
-          <option>Red</option>
-          <option>Gray</option>
-          <option>Green</option>
-          <option>Orange</option>
-          <option>Magenta</option>
+        <select class="form-control" id="colors" v-model="newCategoryColor">
+          <p class="text-muted">Required</p>
+          <option value="#38A3D3">Blue</option>
+          <option value="#DE6F4C">Red</option>
+          <option value="#65B96E">Gray</option>
+          <option value="#F1CD56">Green</option>
+          <option value="#B965A7">Orange</option>
+          <option value="#484948">Magenta</option>
         </select>
       </div>
       
@@ -39,6 +41,20 @@
   margin-top: 15vh;
 }
 
+.category-new label {
+  font-size: 1.8em;
+  font-weight: 400;
+}
+
+.category-new .form-control {
+  margin-bottom: 1.5rem;
+  background-color: rgba(255 255 255 0.25);
+}
+
+.category-new .file-input {
+  width: 100px;
+}
+
 .category-help {
   margin-top: 5vh;
 }
@@ -55,6 +71,7 @@ export default {
       newCategoryName: "",
       newCategoryStatement: "",
       newCategoryImage: "",
+      newCategoryColor: "",
     };
   },
   methods: {
@@ -68,7 +85,7 @@ export default {
       formData.append("name", this.newCategoryName);
       formData.append("statement", this.newCategoryStatement);
       formData.append("image_file", this.newCategoryImage);
-      formData.appen("color", this.currentCategory.color);
+      formData.append("color", this.currentCategory.color);
 
       axios.post("/api/categories", formData).then((response) => {
         console.log("Success", response.data);

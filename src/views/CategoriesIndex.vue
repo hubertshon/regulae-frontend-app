@@ -1,49 +1,48 @@
 <template>
-  <!-- Category Info -->
+  
   <div class="categoriesindex">
     <div class="container">
-      <!-- <div class="categories">
 
-      </div> -->
+    <div class="categories">
 
       <div class="row special-feature">
         <div class="col-lg-4 margin20 wow animated zoomIn" data-wow-duration=".5s" data-wow-delay=".2s" v-for="(category, categoryIndex) in categories">
+          <!--Edit Button-->
           <div  class="s-feature-box text-center"  :style="{ backgroundColor: category.color }">
-            <a :href="`/categories/${category.id}`">
-            <div class="mask-top">
-              <!-- Icon -->
-                <progress-ring
-                  :progress="getCategoryProgress(category)"
-                ></progress-ring>
-                <h3>{{ getCategoryProgress(category) }}%</h3>
+              <i class="icon-Pen-5" type="button" data-toggle="modal"
+                data-target="#categoryModal"
+                v-on:click="setCurrentCategory(categoryIndex)"> 
+              </i>
 
-              <!-- Title -->
-              <h1 class="category-name">
-                  {{ category.name }}</h1>
-            </div>
-            <!--HOVER EFFECT-->
-            <div class="mask-bottom">
-              <inline-svg :src="category.image_url" class="category-icon" />
-              <h2 style="color: white;">{{category.statement}}</h2>
-              <div class="category-habits-idx" v-for="habit in category.habits">
-              <p>{{ habit.name }}</p>
-                  <div class="ctg-bar-container">
-                    <div
-                      class="ctg-bar"
-                      :style="{ width: habit.habit_progress * 100 + '%' }"
-                    />
+            <a :href="`/categories/${category.id}`">
+              <div class="mask-top">
+                <!-- Progress -->
+                  <progress-ring
+                    :progress="getCategoryProgress(category)"
+                  >
+                    <h4>{{ getCategoryProgress(category) }}%</h4></progress-ring>
+                  
+
+                <!-- Title -->
+                <h1 class="category-name">
+                    {{ category.name }}</h1>
+              </div>
+              <!--HOVER EFFECT-->
+              <div class="mask-bottom">
+                <inline-svg :src="category.image_url" class="category-icon" />
+                <h2 style="color: white;">{{category.statement}}</h2>
+                <div class="category-habits-idx" v-for="habit in category.habits">
+                <p>{{ habit.name }}</p>
+                    <div class="ctg-bar-container">
+                      <div
+                        class="ctg-bar"
+                        :style="{ width: habit.habit_progress * 100 + '%' }"
+                      />
+                    </div>
                   </div>
-                </div>
-            </div>
-            <!-- <i class="icon-edit"
-                  type="button"
-                  data-toggle="modal"
-                  data-target="#categoryModal"
-                  v-on:click="setCurrentCategory(categoryIndex)"
-                >
-              Edit Category
-            </i> -->
+              </div>
             </a>
+
           </div>
         </div>
       </div>
@@ -57,7 +56,7 @@
         role="dialog"
         aria-labelledby="categoryModalLabel"
         aria-hidden="true"
-      >
+        >
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -101,13 +100,13 @@
 
                 <div class="form-group">
                   <label for="colorSelect">Color:</label>
-                  <select class="form-control" id="colors">
-                    <option>"Blue"</option>
-                    <option>"Red"</option>
-                    <option>"Gray"</option>
-                    <option>"Green"</option>
-                    <option>"Orange"</option>
-                    <option>"Magenta"</option>
+                  <select class="form-control" id="colors" v-model="currentCategory.color">
+                    <option value="#38A3D3">"Blue"</option>
+                    <option value="#DE6F4C">"Red"</option>
+                    <option value="#65B96E">"Green"</option>
+                    <option value="#F1CD56">"Yellow"</option>
+                    <option value="#B965A7">"Orange"</option>
+                    <option value="#484948">Charcoal"</option>
                   </select>
                 </div>
               </div>
@@ -139,7 +138,25 @@
           </div>
         </div>
       </div>
+
+      <!--catgCongratsModal-->
+      <div class="modal fade" id="catgCongratsModal" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <div class="modal-body">
+                <p>You are doing well in a category!</p>
+             </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
     </div>
+  </div>
   </div>
 </template>
 
@@ -153,17 +170,19 @@
   border-radius: 20px;
 }
 
-.special-feature .s-feature-box::after {
+/* .special-feature .s-feature-box::after {
   margin: 1em;
   box-shadow: 0px 30px 40px 0 rgba(0, 101, 20, 0.16),
     0 15px 15px 0 rgba(0, 0, 0, 0.15);
   text-align: center;
   height: 560px;
   border-radius: 20px;
-}
-.special-feature .s-feature-box:hover::after {
-  box-shadow: 0px 30px 40px 0 rgba(0, 101, 20, 0.16),
-    0 15px 15px 0 rgba(0, 0, 0, 0.15);
+} */
+.special-feature .s-feature-box:hover {
+  box-shadow: 7px 35px 50px 0 rgba(0, 101, 20, 0.35),
+    0 20px 20px 0 rgba(0, 0, 0, 0.25);
+  transition: 0.5s;
+  transition-timing-function: ease-out;
 }
 
 .s-feature-box h1 {
@@ -192,6 +211,24 @@
 .special-feature .s-feature-box h1,
 .special-feature .s-feature-box h3 {
   color: white;
+}
+
+.s-feature-box .icon-Pen-5 {
+  color: white;
+  line-height: 10px;
+  padding: 10px;
+  font-size: 2.5em;
+  text-align: left;
+  opacity: 0.4;
+  bottom: 15px;
+  position: absolute;
+
+  right: 5px;
+  z-index: 1;
+}
+
+.s-feature-box .icon-Pen-5:hover {
+  opacity: 1;
 }
 
 .category-name {
@@ -230,6 +267,14 @@ circle {
   margin: 15px;
   padding: 5px, 10px, 10px, 10px;
 }
+
+/* #catgCongratsToast h5 {
+  display: none;
+}
+
+#catgCongratsToast h5 {
+  color: white;
+} */
 </style>
 
 <script>
@@ -247,6 +292,7 @@ export default {
       currentCategory: {},
       errors: [],
       categoryProgress: "",
+      catgCongrats: "",
     };
   },
   created: function () {
@@ -255,18 +301,29 @@ export default {
       this.categories = response.data;
     });
   },
+  mounted: function () {
+    // $("#catgCongratsToast").toast("hide");
+    // this.categories.forEach(function (i) {
+    //   if (i.category_progress >= 1) {
+    //     this.catgCongrats = i.name;
+    //     console.log("yes", i.name);
+    //     $("#catgCongratsToast").toast("show");
+    //   }
+    // });
+  },
 
   methods: {
     editCurrentCategory: function () {
       var formData = new FormData();
       formData.append("name", this.currentCategory.name);
       formData.append("statement", this.currentCategory.statement);
-      formData.append("image_file", this.currentCategory.image);
-      // formData.append("color", this.currentCategory.color);
+      formData.append("image_url", this.currentCategory.image);
+      formData.append("color", this.currentCategory.color);
       axios
         .patch(`/api/categories/${this.currentCategory.id}`, formData)
         .then((response) => {
           console.log("Category Edited", response.data);
+          $(this.categoryModal).modal("hide");
         })
         .catch((error) => {
           this.errors = error.response.data.errors;

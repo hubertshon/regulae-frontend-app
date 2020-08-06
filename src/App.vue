@@ -23,9 +23,6 @@
             <a class="nav-link active" href="/">Welcome</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/logout">Log Out</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="/tutorial">Tutorial </a>
           </li>
           <li class="nav-item" v-if="isLoggedIn()">
@@ -33,6 +30,9 @@
           </li>
           <li class="nav-item" v-if="isLoggedIn()">
             <a class="nav-link" href="/categories">Categories</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Log Out</a>
           </li>
           <li class="nav-item" v-if="isLoggedIn()">
             <a
@@ -188,6 +188,7 @@
 <style>
 * {
   font-family: "Raleway", sans-serif;
+  /* font-family: "icomoon"; */
 }
 .container {
   margin-top: 10%;
@@ -196,6 +197,10 @@
 body {
   background-color: rgb(247, 247, 247);
   height: 100vmax;
+}
+
+.btn-success {
+  background-color: rgb(41, 136, 60);
 }
 
 nav .btn {

@@ -1,15 +1,12 @@
 <template>
-  <div class="home">
-    <div class="container">
+  <div class="uphabits">
 
       <h2>Upcoming Habits</h2>
-      <div class="uphabt-habits" v-for="habit in upcomingHabits">
-        <li>{{ habit.name }}</li>
-        <button class="button" v-on:click="addComplete(habit.id)">Add</button>
+      <div class="uphabits" v-for="habit in upcomingHabits">
+        <a :href="`/categories/${habit.category_id}`" v-on:click="this.currentHabit=habit"><li>{{ habit.name }}</li></a>
       </div>
 
 
-    </div>
   </div>
 </template>
 
@@ -20,6 +17,10 @@
 import axios from "axios";
 
 export default {
+  name: "upcoming-habits",
+  props: {
+    currentHabit: {},
+  },
   data: function () {
     return {
       message: "Regulae",
@@ -27,14 +28,14 @@ export default {
       upcomingHabits: [],
     };
   },
-  created: function () {
+  created: function () {},
+  mounted: function () {
     axios.get("/api/habits").then((response) => {
       this.habits = response.data;
       console.log("Habits", response.data);
       this.upcomingHabitsRender(response.data);
     });
   },
-  mounted: function () {},
 
   methods: {
     addComplete: function (habitId) {
@@ -43,14 +44,11 @@ export default {
       };
       axios.post("/api/completes", params).then((response) => {
         console.log("Complete Added", response.data);
-        axios.get("/api/habits").then((response) => {
-          this.habits = response.data;
-          console.log("Habits", response.data);
-          this.upcomingHabitsRender(response.data);
-        });
+        this.upcomingHabitsRender(response.data);
       });
     },
     upcomingHabitsRender: function (habits) {
+      console.log("Running");
       var today = new Date();
       var recentCompletes = [];
       this.upcomingHabits = [];
@@ -97,6 +95,7 @@ export default {
       console.log("Upcoming Habits", this.upcomingHabits);
       return this.upcomingHabits;
     },
+    findCategory: function () {},
   },
 };
 </script>

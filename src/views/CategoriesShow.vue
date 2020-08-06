@@ -4,16 +4,18 @@
       <!--Category Info-->
       <div class="row">
         <div class="mb40">
-        <inline-svg :src="category.image_url" class="icon" />
-        </div>
-        <div class="col-lg">
-        <h2 class="display-4">{{ category.name }}</h2>
+        <!-- <inline-svg :src="category.image_url" class="icon" />-->
+        </div> 
+        <div class="col-lg" id="category-heading">
+        <h2 class="display-3">{{ category.name }}</h2>
         <blockquote class="blockquote">{{ category.statement }}</blockquote>
         </div>
       </div>
       <p>{{ noHabitMessage }}</p>
+
+
       <div class="row">
-        <div class="mb40" id="habit-selector">
+        <div class="col-sm-3" id="habit-selector">
           <div v-for="(habit, habitIndex) in category.habits"
             class="category-habits">
             <button
@@ -25,19 +27,23 @@
           </div>
         </div>
 
-        <div class="col-lg">
+        <div class="col-md-6">
           
-          <!-- Habit Info -->
+          <!-- Habit Info "icon-Arrow-UpinCircle"-->
           <div class="habit-container">
+
+            
             <div v-show="currentHabit.id > 0" class="current-habit">
               <!-- Progress Bar  -->
 
               <!-- Habit Details -->
+              
               <h5 v-show="currentHabit.habit_progress === 1">
                 {{ completeMessage }}
               </h5>
-              <h3>{{ currentHabit.name }}</h3>
+              <h2>{{ currentHabit.name }}</h2> 
               <h4>Progress: {{ getHabitProgress(currentHabit.habit_progress) }}%</h4>
+
 
               <div class="bar-container">
                 <div
@@ -56,43 +62,51 @@
               </p>
               <p>Date Started: {{ currentHabit.created_at }}</p> 
               <p v-if="currentHabit.notes">Notes: {{ currentHabit.notes }}</p>
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-toggle="modal"
-                data-target="#habitModal"
-              >
-                Edit Habit
-              </button>
-              <button
-                type="button"
-                class="btn btn-outline-secondary btn"
-                v-on:click="removeComplete()"
-              >
-                -
-              </button>
-              <button
-                type="button"
-                class="btn btn-success btn"
-                v-on:click="addComplete()"
-              >
-                +
-              </button>
+
+              <div class="button-container">
+                <button
+                  class="icon-Arrow-DowninCircle"
+                  type="button"
+                  id="remove-complete"
+                  v-on:click="removeComplete()"
+                >
+                </button>
+                <button
+                  type="button"
+                  class="icon-Bulleted-List"
+                  id="edit-habit"
+                  data-toggle="modal"
+                  data-target="#habitModal"
+                >
+                </button>
+                
+                <button
+                  class="icon-Add"
+                  type="button"
+                  id="add-complete"
+                  v-on:click="addComplete()"
+                >
+                </button>
+              </div>
             
           </div>
           <!--Habit Index-->
-
+          
         </div>
 
-        <!--Edit Habit Modal -->
-        <div
+       <div class="col-md-3">
+          <upcoming-habits :currentHabit="this.currentHabit"></upcoming-habits>
+          </div>
+        </div>
+          <!--Edit Habit Modal -->
+         <div
           class="modal fade"
           id="habitModal"
           tabindex="-1"
           role="dialog"
           aria-labelledby="habitModalLabel"
           aria-hidden="true"
-        >
+          >
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -230,8 +244,26 @@
               </form>
             </div>
           </div>
-        </div>
+        
+
+
+
+
       </div>
+              <!--Congrats Modal-->
+        <div class="modal fade" tabindex="-1" role="dialog" id="habitCongratsModal" aria-labelledby="habitCongratsModalLabel" aria-hidden="true">
+          <div class="modal-dialog"> 
+
+            <div class="modal-content">
+              <!-- <h5 class="modal-title" id="exampleModalLongTitle">Habit Complete!</h5> -->
+              <p>Congratulations! You've completed a habit!</p>
+              <i class="icon-Medal-3" style="color:green"></i>
+              <button type="button" class="btn btn-success" data-dismiss="modal" aria-label="Close">OK</button>
+                  <span aria-hidden="true">&times;</span>
+            </div>
+          </div>
+
+        </div> 
     </div>
   </div>
 </template>
@@ -244,9 +276,9 @@
 /* .category-show .container {
 } */
 .category-show .container {
-  margin-left: 17vmax;
+  margin: 15vh auto;
 }
-.category-show .habit-container .bar-container {
+.category-show .bar-container {
   text-align: center;
   width: 250px;
   height: 5px;
@@ -260,34 +292,100 @@
   width: 0%;
 }
 
-.category-show .habit-container {
-  margin: 40px;
+#category-heading {
+  margin: 0;
 }
 
-.icon {
+.category-show .i {
   fill: rgb(89, 89, 89);
   width: 10vw;
   height: 10vh;
+  line-height: 20px;
+  font-size: 20px;
+}
+
+/* #habit-container {
+  margin: 0 auto 0 auto;
+} */
+
+#habit-selector,
+#habit-selector .category-habits {
+  margin-left: 0;
+  padding-left: 0;
 }
 
 #habit-selector .btn {
   margin-left: 0;
   padding-left: 0;
 }
+
+.habit-container button {
+  background: none;
+  margin: 1em, auto, 1em auto;
+  text-align: bottom;
+  line-height: 20px;
+  padding: 30px;
+  border: none;
+  font-size: 2rem;
+  color: darkslategray;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.habit-container .button-container {
+  align-items: center;
+  margin-top: 40px;
+}
+
+.habit-container #add-complete {
+  font-size: 4rem;
+}
+
+.habit-container button:hover {
+  color: green;
+  translate: 10px;
+  transform: scale(1.5, 1.5);
+  /* box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.25); */
+  transition: 0.4s;
+}
+
+.habit-container .icon-Arrow-Down:hover {
+  color: red;
+  translate: 10px;
+  transform: scale(1.5, 1.5);
+}
+
+#habitCongratsmodal .modal-content {
+  height: 600px;
+  width: 600px;
+}
+#habitCongratsModal p {
+  font-size: 2em;
+  margin: auto;
+  text-align: center;
+}
+
+#habitCongratsModal i {
+  font-size: 8em;
+  text-align: center;
+}
 </style>
 
 <script>
 import axios from "axios";
 import InlineSvg from "vue-inline-svg";
+import UpcomingHabits from "../components/UpcomingHabits.vue";
 export default {
   components: {
     InlineSvg,
+    UpcomingHabits,
   },
   data: function () {
     return {
       category: [],
       categories: [],
       currentHabit: {},
+      habits: [],
       errors: [],
       durationOrDate: 1,
       noHabitMessage: "",
@@ -302,13 +400,18 @@ export default {
     axios
       .get(`/api/categories/${this.$route.params.id}`)
       .then((response) => {
-        console.log("Categories: ", response.data);
+        console.log("Category: ", response.data);
         this.category = response.data;
         this.currentHabit = this.category.habits[0];
       })
       .catch((error) => {
         this.errors = error.response.data.errors;
       });
+
+    axios.get("/api/habits").then((response) => {
+      this.habits = response.data;
+      console.log("Habits", response.data);
+    });
   },
   methods: {
     habitTranslate: function (hFactor) {
@@ -323,6 +426,7 @@ export default {
 
     setCurrentHabit: function (index) {
       this.currentHabit = this.category.habits[index];
+      this.currentHabit.created_at = this.category.habits[index].created_at;
     },
     editCurrentHabit: function () {
       var params = {
@@ -351,7 +455,7 @@ export default {
     },
     deleteCurrentHabit: function () {
       axios.delete(`/api/habits/${this.currentHabit.id}`);
-      this.$forceUpdate(this.categories);
+      this.$forceUpdate(this.categories); // add refreshmethod
     },
 
     addComplete: function () {
@@ -362,6 +466,10 @@ export default {
         console.log("Complete Added", response.data);
         this.currentHabit.habit_progress = response.data.habit_progress;
         this.currentHabit.completes = response.data.completes;
+        if (response.data.habit_progress >= 1) {
+          console.log("YES");
+          $("#habitCongratsModal").modal("show");
+        }
       });
     },
 
@@ -383,3 +491,6 @@ export default {
   },
 };
 </script>
+
+
+

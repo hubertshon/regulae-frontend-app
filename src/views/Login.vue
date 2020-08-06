@@ -23,7 +23,7 @@
 import axios from "axios";
 
 export default {
-  data: function() {
+  data: function () {
     return {
       email: "",
       password: "",
@@ -32,7 +32,7 @@ export default {
     };
   },
   methods: {
-    submit: function() {
+    submit: function () {
       var params = {
         email: this.email,
         password: this.password,
@@ -44,7 +44,7 @@ export default {
             "Bearer " + response.data.jwt;
           localStorage.setItem("jwt", response.data.jwt);
           localStorage.setItem("user_id", response.data.user_id);
-          this.$router.push("/");
+          this.$router.push("/tutorial");
         })
         .catch((error) => {
           this.errors = ["Invalid email or password"];
