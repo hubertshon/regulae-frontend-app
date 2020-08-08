@@ -209,7 +209,7 @@
                     </select>
                   </div>
                   <p v-for="error in errors">{{ error }}</p>
-                  <p>{{this.saveMessage = "Changes Saved!"}}</p>
+                  <p>{{saveMessage}}</p>
                 </div>
 
                 <!-- Buttons -->

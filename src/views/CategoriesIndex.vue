@@ -89,9 +89,13 @@
                   v-model="currentCategory.statement"
                   value="Category Name"
                 />
-                Image URL:
+                Image :
+                <p>{{currentCategory.image_url}}
+                </p>
+                Upload New Image File:
                 <input
                   type="file"
+                  id="file-input"
                   class="form-control"
                   v-on:change="setFile($event)"
                   ref="fileInput"
@@ -110,7 +114,10 @@
                     <option value="#626262">Dim Gray"</option>
                   </select>
                 </div>
+                <div class="modal-messages">
                 <p>{{message}}</p>
+                <p v-for="error in errors">{{error}}</p>
+                </div>
               </div>
 
               <div class="modal-footer">
@@ -144,22 +151,6 @@
         </div>
       </div>
 
-      <!--catgCongratsModal-->
-      <!-- <div class="modal fade" id="catgCongratsModal" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <div class="modal-body">
-                <p>You are doing well in a category!</p>
-             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      </div> -->
     </div>
   </div>
   </div>
@@ -253,7 +244,7 @@
 
 .category-icon {
   fill: rgb(255, 255, 255);
-  width: 10vh;
+  width: 10vw;
   height: 10vh;
   margin: 5vm 5vm 5vm 8vm;
 }
@@ -280,14 +271,6 @@ circle {
   margin: 15px;
   padding: 5px, 10px, 10px, 10px;
 }
-
-/* #catgCongratsToast h5 {
-  display: none;
-}
-
-#catgCongratsToast h5 {
-  color: white;
-} */
 </style>
 
 <script>
@@ -303,6 +286,7 @@ export default {
     return {
       categories: [],
       currentCategory: {},
+      newCategoryImage: "",
       errors: [],
       categoryProgress: "",
       catgCongrats: "",
@@ -331,8 +315,10 @@ export default {
       var formData = new FormData();
       formData.append("name", this.currentCategory.name);
       formData.append("statement", this.currentCategory.statement);
-      formData.append("image_url", this.currentCategory.image);
       formData.append("color", this.currentCategory.color);
+      if (this.newCategoryImage !== "") {
+        formData.append("image_file", this.newCategoryImage);
+      }
       axios
         .patch(`/api/categories/${this.currentCategory.id}`, formData)
         .then((response) => {
@@ -340,6 +326,7 @@ export default {
           this.message = "Changes Saved!";
         })
         .catch((error) => {
+          this.message = "Errors!";
           this.errors = error.response.data.errors;
         });
     },
@@ -359,7 +346,7 @@ export default {
     },
     setFile: function () {
       if (event.target.files.length > 0) {
-        this.currentCategory.image = event.target.files[0];
+        this.newCategoryImage = event.target.files[0];
       }
     },
   },

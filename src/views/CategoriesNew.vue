@@ -85,7 +85,7 @@ export default {
       formData.append("name", this.newCategoryName);
       formData.append("statement", this.newCategoryStatement);
       formData.append("image_file", this.newCategoryImage);
-      formData.append("color", this.currentCategory.color);
+      formData.append("color", this.newCategoryColor);
 
       axios.post("/api/categories", formData).then((response) => {
         console.log("Success", response.data);
