@@ -11,12 +11,15 @@
         <label for="colorSelect">Color:</label>
         <select class="form-control" id="colors" v-model="newCategoryColor">
           <p class="text-muted">Required</p>
-            <option value="#54A3C8">"Maximum Blue"</option>
-            <option value="#DE6F4C">"Burnt Sienna (Red)"</option>
-            <option value="#65B96E">"Bud Green"</option>
-            <option value="#F3D268">"Orange Yellow Crayola"</option>
-            <option value="#B16AB2">"Pearly Purple"</option>
-            <option value="#626262">Dim Gray"</option>
+          <option value="#54A3C8">"Maximum Blue"</option>
+          <option value="#384E77">"Y In Mn Blue"</option>
+          <option value="#DE6F4C">"Burnt Sienna (Red)"</option>
+          <option value="#EC5667">"Fiery Rose (Red)"</option>
+          <option value="#F09012">"Carrot Orange"</option>
+          <option value="#65B96E">"Bud Green"</option>
+          <option value="#F3D268">"Orange Yellow Crayola"</option>
+          <option value="#B16AB2">"Pearly Purple"</option>
+          <option value="#626262">"Dim Gray"</option>
         </select>
       </div>
       
