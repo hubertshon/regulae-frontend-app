@@ -33,7 +33,8 @@
                   <inline-svg :src="category.image_url" class="category-icon" />
                   <h2 class="statement" style="color: white;">{{category.statement}}</h2>
                   <div class="category-habits-idx" v-for="habit in category.habits">
-                    <p>{{ habit.name }}</p>
+                    <p style="display: inline-block; width: 90%; text-align: left;">{{ habit.name }}</p>
+                    <button class="icon-Add" style="display: inline-block; font-size: 1.4em;" v-on:click="addComplete(habit)"></button>
                       <div class="ctg-bar-container">
                         <div
                           class="ctg-bar"
@@ -186,11 +187,28 @@
 }
 
 .special-feature .s-feature-box p {
-  text-align: left;
   margin-left: 0;
   margin-bottom: 5px;
   padding-top: 1em 0 0 0;
   font-size: 1em;
+}
+
+.category-habits-idx button {
+  padding: 0;
+}
+
+.category-habits-idx button {
+  margin: 0 0 0 auto;
+  background: rgba(0, 0, 0, 0);
+  border-width: 0;
+  color: white;
+  z-index: 999;
+  opacity: 1;
+}
+
+.category-habits-idx button:hover {
+  cursor: pointer;
+  opacity: 0.35;
 }
 
 .special-feature .s-feature-box p,
@@ -335,6 +353,20 @@ export default {
       if (event.target.files.length > 0) {
         this.newCategoryImage = event.target.files[0];
       }
+    },
+    addComplete: function (habit) {
+      var params = {
+        habit_id: habit.id,
+      };
+      axios.post("/api/completes", params).then((response) => {
+        console.log("Complete Added", response.data);
+        this.categoryProgress = response.data.habit_progress;
+        console.log("Response", response.data);
+        if (response.data.habit_progress >= 1) {
+          console.log("YES");
+          $("#habitCongratsModal").modal("show");
+        }
+      });
     },
   },
 };

@@ -53,7 +53,8 @@
             <a
               type="button"
               href="/login"
-              class="btn bg-primary btn-sml text-white"
+              class="btn btn-primary btn-sml text-white"
+              id="login-btn"
               >LOG IN</a
             >
           </li>

@@ -75,8 +75,8 @@
               {{ currentHabit.created_at | moment("MMMM Do YYYY, h:mm a") }}
             </p>
             <p v-if="currentHabit.notes">Notes: {{ currentHabit.notes }}</p>
-            <p>
-              Last Complete: {{ currentLastComplete.created_at }}
+            <p v-if="currentLastComplete">
+              Last Complete: {{ currentLastComplete }}
             </p>
           </div>
         </div>
@@ -340,6 +340,7 @@
   background-color: #e6af2e;
   height: 100%;
   width: 0%;
+  transition: 0.3s ease-in-out;
 }
 
 #category-heading {
@@ -411,6 +412,7 @@
 .button-container h1 {
   position: absolute;
   margin-bottom: 1px;
+  font-weight: 700;
 }
 
 .habit-container #add-complete:hover {
@@ -493,7 +495,7 @@ export default {
         this.currentHabit = this.category.habits[0];
         this.currentLastComplete = this.lastItem(
           this.category.habits[0].completes
-        );
+        ).created_at;
       })
       .catch((error) => {
         this.errors = error.response.data.errors;
@@ -516,12 +518,15 @@ export default {
     },
 
     setCurrentHabit: function (index) {
+      this.currentLastComplete = "";
       this.currentHabit = this.category.habits[index];
       this.currentHabit.created_at = this.category.habits[index].created_at;
       this.currentLastComplete = this.lastItem(
         this.category.habits[index].completes
-      );
+      ).created_at;
+      var today = new Date();
       console.log(this.currentLastComplete);
+      console.log(this.currentHabit);
     },
     editCurrentHabit: function () {
       var params = {
