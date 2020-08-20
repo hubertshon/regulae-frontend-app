@@ -76,7 +76,7 @@
             </p>
             <p v-if="currentHabit.notes">Notes: {{ currentHabit.notes }}</p>
             <p v-if="currentLastComplete">
-              Last Complete: {{ currentLastComplete }}
+              Last Complete: {{ currentLastComplete.created_at | moment("MMMM Do YYYY, h:mm a")}}
             </p>
           </div>
         </div>
@@ -523,7 +523,7 @@ export default {
       this.currentHabit.created_at = this.category.habits[index].created_at;
       this.currentLastComplete = this.lastItem(
         this.category.habits[index].completes
-      ).created_at;
+      );
       var today = new Date();
       console.log(this.currentLastComplete);
       console.log(this.currentHabit);
@@ -566,7 +566,7 @@ export default {
       axios.post("/api/completes", params).then((response) => {
         console.log("Complete Added", response.data);
         this.currentHabit.habit_progress = response.data.habit_progress;
-        this.currentHabit.completes = response.data.completes;
+        this.currentLastComplete = this.lastItem(response.data.completes);
         if (response.data.habit_progress >= 1) {
           console.log("YES");
           $("#habitCongratsModal").modal("show");
@@ -583,7 +583,7 @@ export default {
         .then((response) => {
           console.log("Complete Removed");
           this.currentHabit.habit_progress = response.data.habit_progress;
-          this.currentHabit.completes = response.data.completes;
+          this.currentLastComplete = this.lastItem(response.data.completes);
         });
     },
     getHabitProgress: function (progress) {
