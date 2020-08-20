@@ -76,7 +76,7 @@
             </p>
             <p v-if="currentHabit.notes">Notes: {{ currentHabit.notes }}</p>
             <p v-if="currentLastComplete">
-              Last Complete: {{ currentLastComplete.created_at | moment("MMMM Do YYYY, h:mm a")}}
+              Last Complete: {{ currentLastComplete | moment("MMMM Do YYYY, h:mm a")}}
             </p>
           </div>
         </div>
@@ -482,8 +482,7 @@ export default {
       currentLastComplete: "",
     };
   },
-  created: function () {},
-  mounted: function () {
+  created: function () {
     axios.get(`/api/categories`).then((response) => {
       this.categories = response.data;
     });
@@ -495,7 +494,7 @@ export default {
         this.currentHabit = this.category.habits[0];
         this.currentLastComplete = this.lastItem(
           this.category.habits[0].completes
-        ).created_at;
+        );
       })
       .catch((error) => {
         this.errors = error.response.data.errors;
@@ -504,8 +503,10 @@ export default {
     axios.get("/api/habits").then((response) => {
       this.habits = response.data;
       console.log("Habits", response.data);
+      console.log("Last Complete Onload", this.currentLastComplete);
     });
   },
+  mounted: function () {},
   methods: {
     habitTranslate: function (hFactor) {
       if (hFactor === 4) {
@@ -521,11 +522,9 @@ export default {
       this.currentLastComplete = "";
       this.currentHabit = this.category.habits[index];
       this.currentHabit.created_at = this.category.habits[index].created_at;
-      this.currentLastComplete = this.lastItem(
-        this.category.habits[index].completes
-      );
+      this.currentLastComplete = this.lastItem(this.currentHabit.completes);
       var today = new Date();
-      console.log(this.currentLastComplete);
+      console.log("set last complete is:", this.currentLastComplete);
       console.log(this.currentHabit);
     },
     editCurrentHabit: function () {
@@ -581,7 +580,7 @@ export default {
       axios
         .delete(`/api/completes/${this.currentHabit.id}`)
         .then((response) => {
-          console.log("Complete Removed");
+          console.log("Complete Removed", response.data);
           this.currentHabit.habit_progress = response.data.habit_progress;
           this.currentLastComplete = this.lastItem(response.data.completes);
         });
@@ -595,7 +594,16 @@ export default {
       return Math.round(result * 100);
     },
     lastItem: function (array) {
-      return array[array.length - 1];
+      var bigId = 0;
+      var result = {};
+      array.forEach(function (index) {
+        if (index.id > bigId) {
+          result = index;
+          bigId = index.id;
+        }
+        console.log("Last Item is:", result.created_at);
+      });
+      return result.created_at;
     },
   },
 };
