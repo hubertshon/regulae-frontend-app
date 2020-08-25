@@ -9,12 +9,16 @@
           <div class="col-lg-4 margin20 wow animated zoomIn" data-wow-duration=".5s" data-wow-delay=".2s" v-for="(category, categoryIndex) in categories">
             <!--Edit Button-->
             <div  class="s-feature-box text-center"  :style="{ backgroundColor: category.color }">
+                <a :href="`/categories/${category.id}`">
+                  <i class="icon-Check" type="button"></i>
+                </a>
+              
               <i class="icon-Pen-5" type="button" data-toggle="modal"
                 data-target="#categoryModal"
                 v-on:click="setCurrentCategory(categoryIndex)"> 
               </i>
 
-              <a :href="`/categories/${category.id}`">
+              <!-- <a :href="`/categories/${category.id}`"> -->
                 <div class="mask-top">
                   <!-- Progress -->
                     <progress-ring
@@ -26,7 +30,8 @@
 
                   <!-- Title -->
                   <h1 class="category-name">
-                      {{ category.name }}</h1>
+                    {{ category.name }}
+                  </h1>
                 </div>
                 <!--HOVER EFFECT-->
                 <div class="mask-bottom">
@@ -43,7 +48,7 @@
                       </div>
                   </div>
                 </div>
-              </a>
+              <!-- </a> -->
             </div>
           </div>
         </div>
@@ -237,7 +242,22 @@
   z-index: 1;
 }
 
-.s-feature-box .icon-Pen-5:hover {
+.s-feature-box .icon-Check {
+  color: white;
+  line-height: 10px;
+  padding: 10px;
+  font-size: 2.5em;
+  text-align: left;
+  opacity: 0.4;
+  bottom: 15px;
+  position: absolute;
+
+  left: 5px;
+  z-index: 1;
+}
+
+.s-feature-box .icon-Pen-5:hover,
+.s-feature-box .icon-Check:hover {
   opacity: 1;
 }
 
@@ -284,6 +304,10 @@ circle {
 
 .modal-dialog p {
   overflow-wrap: break-word;
+}
+
+.icon-Add {
+  z-index: 100;
 }
 </style>
 
@@ -360,12 +384,14 @@ export default {
       };
       axios.post("/api/completes", params).then((response) => {
         console.log("Complete Added", response.data);
-        this.categoryProgress = response.data.habit_progress;
-        console.log("Response", response.data);
-        if (response.data.habit_progress >= 1) {
-          console.log("YES");
-          $("#habitCongratsModal").modal("show");
-        }
+        // if (response.data.habit_progress >= 1) {
+        //   console.log("YES");
+        //   $("#habitCongratsModal").modal("show");
+        // }
+      });
+      axios.get(`/api/categories`).then((response) => {
+        console.log("Category:", response.data);
+        this.categories = response.data;
       });
     },
   },
