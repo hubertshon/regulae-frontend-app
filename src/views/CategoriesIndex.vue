@@ -177,6 +177,7 @@
     0 20px 20px 0 rgba(0, 0, 0, 0.25);
   transition: 0.5s;
   transition-timing-function: ease-out;
+  cursor: default;
 }
 
 .s-feature-box h1 {
@@ -329,6 +330,7 @@ export default {
       categoryProgress: "",
       catgCongrats: "",
       message: "",
+      modalShow: true,
     };
   },
   created: function () {
@@ -353,6 +355,7 @@ export default {
         .then((response) => {
           console.log("Category Edited", response.data);
           this.message = "Changes Saved!";
+          $("#categoryModal").modal("hide");
         })
         .catch((error) => {
           this.message = "Errors!";

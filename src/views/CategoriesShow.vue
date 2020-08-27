@@ -67,7 +67,7 @@
               {{ habitTranslate(currentHabit.factor) }}
             </p>
             <p>
-              Completes: {{ currentHabit.completes.length }} /
+              Completes: {{ currentCompletes }} /
               {{ currentHabit.total }}
             </p>
             <p>
@@ -480,6 +480,7 @@ export default {
       completeMessage: "Habit Completed!",
       saveMessage: "",
       currentLastComplete: "",
+      currentCompletes: "",
     };
   },
   created: function () {
@@ -492,6 +493,7 @@ export default {
         console.log("Category: ", response.data);
         this.category = response.data;
         this.currentHabit = this.category.habits[0];
+        this.currentCompletes = this.currentHabit.completes.length;
         this.currentLastComplete = this.lastItem(
           this.category.habits[0].completes
         );
@@ -523,6 +525,7 @@ export default {
       this.currentHabit = this.category.habits[index];
       this.currentHabit.created_at = this.category.habits[index].created_at;
       this.currentLastComplete = this.lastItem(this.currentHabit.completes);
+      this.currentCompletes = this.currentHabit.completes.length;
       var today = new Date();
       console.log("set last complete is:", this.currentLastComplete);
       console.log(this.currentHabit);
@@ -566,6 +569,7 @@ export default {
         console.log("Complete Added", response.data);
         this.currentHabit.habit_progress = response.data.habit_progress;
         this.currentLastComplete = this.lastItem(response.data.completes);
+        this.currentCompletes = response.data.completes.length;
         if (response.data.habit_progress >= 1) {
           console.log("YES");
           $("#habitCongratsModal").modal("show");

@@ -1493,6 +1493,7 @@ Assan Header Style
 
 .navbar-brand {
   position: relative;
+  font-family: "Libre Baskerville", serif;
 }
 
 /**canvas header**/

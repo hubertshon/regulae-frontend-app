@@ -8,7 +8,7 @@
         <div class="col-lg-4 col-md-4 pt30 pb30 text-center">
           <div class="icon-bg">
             <i class="icon-Leafs fa-4x mb20"></i>
-            <h3>A Plan of Life</h3>
+            <h2>A Plan of Life</h2>
             <p>
                 Regulae is an app that helps plan your "rule of life". This is a long enduring practice that is helpful towards anybody. It helps center the person on a regular rhythm.
             </p>
@@ -20,7 +20,7 @@
         <div class="col-lg-4 col-md-4 pt30 pb30 text-center">
           <div class="icon-bg" id="home-2">
             <i class="icon-Tactic fa-4x mb20"></i>
-            <h3>Set a Course</h3>
+            <h2>Set a Course</h2>
             <p>
                 Start by identifying the areas of life. Then identify the areas you need to grow in to become that person. What are the habits you need to do daily, weekly, monthly in order to see that growth fully realized?
             </p>
@@ -32,7 +32,7 @@
         <div class="col-lg-4 col-md-4 pt30 pb30 text-center">
           <div class="icon-bg" id="home-3">
             <i class="icon-Flag-3 fa-4x mb20"></i>
-            <h3>Evaluate</h3>
+            <h2>Evaluate</h2>
             <p>
                 Regulae is designed to acknowledge when you are hitting your stride - not punish you for missing a mark. Evaluate how you are approaching goals and adjust. 
             </p>
@@ -76,8 +76,13 @@
 #home-3 {
   background-color: #54a3c8;
 }
-.icon-bg h3 {
+.icon-bg h2 {
   color: white;
+  font-weight: 700;
+}
+
+.icon-bg p {
+  line-height: 1.6em;
 }
 </style>
 
