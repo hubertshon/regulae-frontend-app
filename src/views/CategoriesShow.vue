@@ -94,7 +94,7 @@
         </div>
 
         <div class="col-sm">
-          <upcoming-habits :currentHabit="this.currentHabit"></upcoming-habits>
+          <upcoming-habits></upcoming-habits>
         </div>
       </div>
 
@@ -605,10 +605,13 @@ export default {
           result = index;
           bigId = index.id;
         }
-        console.log("Last Item is:", result.created_at);
       });
       return result.created_at;
     },
+  },
+  findCategory(habit) {
+    this.currentHabit = habit;
+    console.log("event", habit);
   },
 };
 </script>

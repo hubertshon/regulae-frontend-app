@@ -3,9 +3,7 @@
     <h3>UPCOMING</h3>
     <div class="uphabits" v-for="index in upcomingHabits">
       <a
-        :href="`/categories/${index.habit.category_id}`"
-        v-on:click="this.upcomingHabit = habit"
-        >{{ index.habit.name }} ({{ index.completesLeft }})
+        :href="`/categories/${index.habit.category_id}`"     >{{ index.habit.name }} ({{ index.completesLeft }})
       </a>
     </div>
   </div>
@@ -38,15 +36,15 @@ export default {
     currentHabit: {},
     upcomingHabit: {},
   },
-  data: function() {
+  data: function () {
     return {
       message: "Regulae",
       habits: [],
       upcomingHabits: [],
     };
   },
-  created: function() {},
-  mounted: function() {
+  created: function () {},
+  mounted: function () {
     axios.get("/api/habits").then((response) => {
       this.habits = response.data;
       console.log("Habits", response.data);
@@ -55,7 +53,7 @@ export default {
   },
 
   methods: {
-    addComplete: function(habitId) {
+    addComplete: function (habitId) {
       var params = {
         habit_id: habitId,
       };
@@ -64,7 +62,7 @@ export default {
         this.upcomingHabitsRender(response.data);
       });
     },
-    upcomingHabitsRender: function(habits) {
+    upcomingHabitsRender: function (habits) {
       console.log("Running");
       var today = new Date();
       var recentCompletes = [];
@@ -121,7 +119,9 @@ export default {
       console.log("Upcoming Habits", this.upcomingHabits);
       return this.upcomingHabits;
     },
-    findCategory: function() {},
+    findCategory: function () {
+      this.$emit("findCategory", this.index);
+    },
   },
 };
 </script>

@@ -282,12 +282,14 @@
 
 .ctg-bar-container {
   text-align: center;
+  border-radius: 10px;
   width: 6vm;
-  height: 3px;
-  margin: 0 15px 15px 15px;
+  height: 4px;
+  margin: 0 15px 25px 15px;
   background-color: rgba(255, 255, 255, 0.571);
 }
 .ctg-bar {
+  border-radius: 10px;
   background-color: rgb(255, 255, 255);
   height: 100%;
   width: 0%;
