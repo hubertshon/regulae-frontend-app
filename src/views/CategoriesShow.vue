@@ -72,11 +72,11 @@
             </p>
             <p>
               Date Started:
-              {{ currentHabit.created_at | moment("MMMM Do YYYY, h:mm a") }}
+              {{ $date(currentHabit.created_at).format('YYYY MMM DD ddd h:mm A') }}
             </p>
             <p v-if="currentHabit.notes">Notes: {{ currentHabit.notes }}</p>
             <p v-if="currentLastComplete">
-              Last Complete: {{ currentLastComplete | moment("MMMM Do YYYY, h:mm a")}}
+              Last Complete: {{ $date(currentLastComplete).format('YYYY MMM DD ddd h:mm A') }}
             </p>
           </div>
         </div>
@@ -269,9 +269,11 @@
               />
             </svg>
             <h3>You have completed a habit!</h3>
+            <button class="btn-primary okbutton" data-dismiss="modal">OK</button>
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </template>
@@ -444,7 +446,7 @@
 }
 #habitCongratsModal h3 {
   padding: 20px;
-  margin: auto;
+  margin: 3rem auto;
   text-align: center;
   font-weight: 200;
 }
@@ -456,12 +458,21 @@
   margin: auto;
   fill: rgb(116, 199, 104);
 }
+
+.okbutton {
+  font-weight: 700;
+  width: 6rem;
+  height: 2.5rem;
+  margin: 0 auto 5rem auto;
+  border-radius: 5px;
+}
 </style>
 
 <script>
 import axios from "axios";
 import InlineSvg from "vue-inline-svg";
-import * as moment from "moment/moment";
+import VueDayjs from "vue-dayjs-plugin";
+
 import UpcomingHabits from "../components/UpcomingHabits.vue";
 export default {
   components: {

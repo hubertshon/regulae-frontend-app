@@ -2,7 +2,8 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import axios from "axios";
-import VueMoment from "vue-moment";
+import VueDayjs from 'vue-dayjs-plugin';
+
 // import "bootstrap";
 // import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -18,7 +19,7 @@ if (jwt) {
 Vue.config.productionTip = false;
 // Vue.component("some-component", SomeComponent);
 
-Vue.use(VueMoment);
+Vue.use(VueDayjs)
 
 new Vue({
   router,

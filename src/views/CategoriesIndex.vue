@@ -143,6 +143,7 @@
                     type="button"
                     class="btn btn-secondary"
                     data-dismiss="modal"
+                    v-on:click="resetCategory(currentCategory.id);"
                   >
                     Close
                   </button>
@@ -371,6 +372,11 @@ export default {
     setCurrentCategory: function (index) {
       this.currentCategory = this.categories[index];
       console.log(this.currentCategory);
+    },
+    resetCategory: function (num) {
+      var backCategory = this.categories.find((x) => x.id === num);
+      this.currentCategory = backCategory;
+      console.log(backCategory);
     },
     getCategoryProgress: function (category) {
       return Math.round(category.category_progress * 100);
